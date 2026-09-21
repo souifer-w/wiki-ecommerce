@@ -1,0 +1,1092 @@
+/* =========================================================
+   WIKI — COLLECTIONS PAGE
+   Premium Editorial Men's Fashion
+   ========================================================= */
+
+:root {
+  --wiki-black: #090909;
+  --wiki-white: #ffffff;
+  --wiki-cream: #f5f4f0;
+  --wiki-soft: #eeece7;
+  --wiki-gray: #777;
+  --wiki-light-gray: #a2a19d;
+  --wiki-border: #deddd8;
+}
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--wiki-white);
+  color: var(--wiki-black);
+  font-family: "Hanken Grotesk", sans-serif;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.collection-hero {
+  position: relative;
+
+  min-height: 570px;
+
+  padding: 100px 5vw 85px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  overflow: hidden;
+
+  background: linear-gradient(135deg, #f8f7f3 0%, #f0efeb 55%, #e8e6e0 100%);
+}
+
+/* Huge background W */
+
+.collection-hero::before {
+  content: "W";
+
+  position: absolute;
+
+  right: -30px;
+  bottom: -160px;
+
+  font-family: "Bodoni Moda", serif;
+
+  font-size: 620px;
+  font-weight: 500;
+
+  line-height: 0.8;
+
+  color: rgba(0, 0, 0, 0.035);
+
+  pointer-events: none;
+}
+
+/* Decorative line */
+
+.collection-hero::after {
+  content: "";
+
+  position: absolute;
+
+  top: 90px;
+  right: 5vw;
+
+  width: 100px;
+  height: 1px;
+
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Hero content */
+
+.collection-hero-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 900px;
+}
+
+/* Small label */
+
+.eyebrow {
+  display: inline-block;
+
+  margin-bottom: 20px;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+}
+
+/* Main title */
+
+.collection-hero h1 {
+  margin: 0;
+
+  font-family: "Bodoni Moda", serif;
+
+  font-size: clamp(65px, 9vw, 135px);
+
+  font-weight: 500;
+
+  line-height: 0.84;
+
+  letter-spacing: -0.065em;
+}
+
+.collection-hero h1 em {
+  font-weight: 400;
+}
+
+/* Description */
+
+.collection-hero p {
+  max-width: 520px;
+
+  margin: 35px 0 0;
+
+  color: #666560;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+/* Collection number */
+
+.collection-hero-number {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  gap: 3px;
+}
+
+.collection-hero-number span {
+  color: #777;
+
+  font-size: 8px;
+  font-weight: 600;
+
+  letter-spacing: 0.18em;
+}
+
+.collection-hero-number strong {
+  font-family: "Bodoni Moda", serif;
+
+  font-size: 42px;
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.collection-toolbar {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 30;
+
+  min-height: 78px;
+
+  padding: 0 5vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border-bottom: 1px solid var(--wiki-border);
+
+  backdrop-filter: blur(15px);
+}
+
+/* Left side */
+
+.collection-count {
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.collection-count span {
+  color: #888;
+
+  font-size: 9px;
+  font-weight: 500;
+
+  letter-spacing: 0.16em;
+}
+
+.collection-count strong {
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 0.1em;
+}
+
+/* Right side */
+
+.collection-tools {
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+}
+
+.collection-tool {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 10px 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: var(--wiki-black);
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 0.13em;
+
+  transition: opacity 0.25s ease;
+}
+
+.collection-tool:hover {
+  opacity: 0.5;
+}
+
+.collection-tool .material-symbols-outlined {
+  font-size: 17px;
+}
+
+/* =========================================================
+   PRODUCTS SECTION
+   ========================================================= */
+
+.collection-products {
+  padding: 90px 5vw 130px;
+
+  background: var(--wiki-white);
+}
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.collection-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 90px;
+}
+
+/* =========================================================
+   PRODUCT CARD
+   ========================================================= */
+
+.collection-product {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-product:hover {
+  transform: translateY(-5px);
+}
+
+/* =========================================================
+   IMAGE CONTAINER
+   ========================================================= */
+
+.collection-image-wrap {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+
+  aspect-ratio: 0.74;
+
+  overflow: hidden;
+
+  background: #efeee9;
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+/* Product image */
+
+.collection-product-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.9s cubic-bezier(0.2, 0.65, 0.25, 1),
+    filter 0.5s ease;
+}
+
+.collection-image-wrap:hover .collection-product-image {
+  transform: scale(1.06);
+
+  filter: brightness(0.93);
+}
+
+/* =========================================================
+   PRODUCT NUMBER
+   ========================================================= */
+
+.product-index {
+  position: absolute;
+
+  top: 17px;
+  left: 17px;
+
+  z-index: 3;
+
+  color: #fff;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 0.15em;
+
+  mix-blend-mode: difference;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   WISHLIST
+   ========================================================= */
+
+.collection-wishlist {
+  position: absolute;
+
+  top: 14px;
+  right: 14px;
+
+  z-index: 5;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  color: var(--wiki-black);
+
+  opacity: 0;
+
+  transform: translateY(-8px);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.collection-image-wrap:hover .collection-wishlist {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+.collection-wishlist:hover {
+  background: var(--wiki-black);
+
+  color: var(--wiki-white);
+}
+
+.collection-wishlist .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* =========================================================
+   VIEW PRODUCT
+   ========================================================= */
+
+.collection-view {
+  position: absolute;
+
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+
+  z-index: 4;
+
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 18px;
+
+  background: var(--wiki-white);
+
+  color: var(--wiki-black);
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 0.14em;
+
+  opacity: 0;
+
+  transform: translateY(20px);
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s cubic-bezier(0.2, 0.65, 0.25, 1);
+}
+
+.collection-image-wrap:hover .collection-view {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+.collection-view span {
+  font-size: 18px;
+
+  transition: transform 0.3s ease;
+}
+
+.collection-view:hover span {
+  transform: translate(4px, -4px);
+}
+
+/* =========================================================
+   PRODUCT INFO
+   ========================================================= */
+
+.collection-product-info {
+  padding-top: 19px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Product title row */
+
+.collection-product-heading {
+  min-height: 58px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Category */
+
+.collection-category {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--wiki-light-gray);
+
+  font-size: 8px;
+  font-weight: 600;
+
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+/* Product name */
+
+.collection-product-heading h2 {
+  max-width: 240px;
+  min-height: 48px;
+  margin: 0;
+  color: var(--wiki-black);
+  font-family: "Bodoni Moda", serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.collection-product:hover .collection-product-heading h2 {
+  color: #686762;
+}
+
+/* Price */
+
+.collection-product-heading strong {
+  flex-shrink: 0;
+
+  padding-top: 16px;
+
+  color: var(--wiki-black);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.02em;
+}
+
+/* =========================================================
+   PRODUCT BOTTOM
+   ========================================================= */
+
+.collection-product-bottom {
+  margin-top: auto;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding-top: 13px;
+  border-top: 1px solid #e4e3de;
+}
+/* =========================================================
+   COLOR DOTS
+   ========================================================= */
+
+.color-list {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+.color-dot {
+  width: 11px;
+  height: 11px;
+
+  display: block;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(0, 0, 0, 0.16);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.color-dot:hover {
+  transform: scale(1.25);
+
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 3px #111;
+}
+
+/* =========================================================
+   COLOR DOT COLORS
+   ========================================================= */
+
+.color-dot:nth-child(1) {
+  background: #151515;
+}
+
+.color-dot:nth-child(2) {
+  background: #dedbd2;
+}
+
+.color-dot:nth-child(3) {
+  background: #70756e;
+}
+
+.color-dot:nth-child(4) {
+  background: #273142;
+}
+
+.color-dot:nth-child(5) {
+  background: #8a6d55;
+}
+
+.color-dot:nth-child(6) {
+  background: #b7a99a;
+}
+
+/* =========================================================
+   ADD TO CART
+   ========================================================= */
+.collection-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 38px;
+  padding: 0 16px;
+
+  border: 1px solid #090909;
+  background: #090909;
+  color: #ffffff;
+
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+
+  overflow: hidden;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Animated underline */
+
+.collection-cart::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -1px;
+
+  width: 0;
+  height: 1px;
+
+  background: #777;
+
+  transition: width 0.3s ease;
+}
+
+.collection-cart:hover {
+  opacity: 0.7;
+}
+
+.collection-cart:hover::after {
+  width: 100%;
+}
+
+.collection-cart .material-symbols-outlined {
+  font-size: 16px;
+  transition: transform 0.25s ease;
+}
+
+.collection-cart:hover .material-symbols-outlined {
+  transform: translateX(2px);
+}
+
+/* =========================================================
+   EDITORIAL SECTION
+   ========================================================= */
+
+.collection-editorial {
+  position: relative;
+
+  min-height: 620px;
+
+  padding: 110px 10vw;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  overflow: hidden;
+
+  background: var(--wiki-black);
+
+  color: var(--wiki-white);
+}
+
+/* Huge background W */
+
+.collection-editorial::after {
+  content: "W";
+
+  position: absolute;
+
+  right: -70px;
+  bottom: -190px;
+
+  font-family: "Bodoni Moda", serif;
+
+  font-size: 650px;
+
+  line-height: 0.8;
+
+  color: rgba(255, 255, 255, 0.025);
+
+  pointer-events: none;
+}
+
+/* Editorial content */
+
+.editorial-copy {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 650px;
+}
+
+.editorial-copy .eyebrow {
+  color: #999;
+}
+
+.editorial-copy h2 {
+  margin: 0;
+
+  font-family: "Bodoni Moda", serif;
+
+  font-size: clamp(55px, 7vw, 105px);
+
+  font-weight: 400;
+
+  line-height: 0.88;
+
+  letter-spacing: -0.055em;
+}
+
+.editorial-copy h2 em {
+  font-weight: 500;
+}
+
+.editorial-copy p {
+  max-width: 480px;
+
+  margin: 35px 0;
+
+  color: #a1a19e;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+/* Editorial button */
+
+.editorial-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 25px;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #fff;
+
+  color: #fff;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.13em;
+
+  transition: gap 0.3s ease;
+}
+
+.editorial-button:hover {
+  gap: 32px;
+}
+
+.editorial-button span {
+  font-size: 18px;
+}
+
+/* Editorial W */
+
+.editorial-mark {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.editorial-mark span {
+  font-family: "Bodoni Moda", serif;
+
+  font-size: 190px;
+
+  font-weight: 400;
+
+  line-height: 0.8;
+}
+
+.editorial-mark small {
+  color: #777;
+
+  font-size: 8px;
+
+  letter-spacing: 0.2em;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .collection-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 55px 18px;
+  }
+
+  .collection-hero {
+    min-height: 500px;
+  }
+
+  .collection-hero h1 {
+    font-size: clamp(60px, 10vw, 100px);
+  }
+
+  .editorial-mark span {
+    font-size: 140px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .collection-hero {
+    min-height: 440px;
+
+    padding: 70px 20px 55px;
+  }
+
+  .collection-hero::before {
+    right: -30px;
+    bottom: -70px;
+
+    font-size: 300px;
+  }
+
+  .collection-hero::after {
+    display: none;
+  }
+
+  .collection-hero h1 {
+    font-size: 58px;
+  }
+
+  .collection-hero p {
+    max-width: 390px;
+
+    margin-top: 25px;
+
+    font-size: 13px;
+  }
+
+  .collection-hero-number {
+    display: none;
+  }
+
+  /* Toolbar */
+
+  .collection-toolbar {
+    min-height: 65px;
+
+    padding: 0 20px;
+  }
+
+  .collection-count span {
+    display: none;
+  }
+
+  .collection-tools {
+    gap: 18px;
+  }
+
+  /* Products */
+
+  .collection-products {
+    padding: 55px 20px 90px;
+  }
+
+  .collection-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 45px 12px;
+  }
+
+  .collection-image-wrap {
+    aspect-ratio: 0.72;
+  }
+
+  /* Product text */
+
+  .collection-product-info {
+    padding-top: 13px;
+  }
+
+  .collection-product-heading {
+    display: block;
+  }
+
+  .collection-product-heading h2 {
+    max-width: 100%;
+
+    font-size: 16px;
+  }
+
+  .collection-product-heading strong {
+    display: block;
+
+    padding-top: 8px;
+
+    font-size: 11px;
+  }
+
+  .collection-category {
+    font-size: 7px;
+  }
+
+  /* Mobile wishlist */
+
+  .collection-wishlist {
+    width: 36px;
+    height: 36px;
+
+    opacity: 1;
+
+    transform: none;
+  }
+
+  /* Hide desktop view button */
+
+  .collection-view {
+    display: none;
+  }
+
+  /* Mobile product hover */
+
+  .collection-product:hover {
+    transform: none;
+  }
+
+  /* Product bottom */
+
+  .collection-product-bottom {
+    margin-top: 12px;
+  }
+
+  /* Cart becomes icon */
+
+  .collection-cart {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid var(--wiki-black);
+  }
+
+  .collection-cart::after {
+    display: none;
+  }
+
+  .collection-cart {
+    font-size: 0;
+  }
+
+  .collection-cart .material-symbols-outlined {
+    font-size: 17px;
+  }
+
+  /* Editorial */
+
+  .collection-editorial {
+    min-height: 520px;
+
+    padding: 80px 25px;
+  }
+
+  .editorial-copy h2 {
+    font-size: 60px;
+  }
+
+  .editorial-copy p {
+    max-width: 400px;
+
+    font-size: 13px;
+  }
+
+  .editorial-mark {
+    display: none;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .collection-hero h1 {
+    font-size: 49px;
+  }
+
+  .collection-products {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .collection-grid {
+    gap: 40px 10px;
+  }
+
+  .collection-product-heading h2 {
+    font-size: 14px;
+  }
+
+  .collection-product-heading strong {
+    font-size: 10px;
+  }
+
+  .collection-category {
+    font-size: 6.5px;
+  }
+}

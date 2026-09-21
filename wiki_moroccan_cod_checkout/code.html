@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>WIKI — Checkout</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main class="checkout-page">
+      <section class="checkout-container">
+        <!-- =========================================
+             TOP HEADER
+        ========================================== -->
+
+        <div class="checkout-header">
+          <div class="header-left">
+            <div class="breadcrumb">
+              <a href="#"> Cart </a>
+
+              <span>/</span>
+
+              <strong> Shipping Details </strong>
+
+              <span>/</span>
+
+              <span class="disabled"> Payment Confirmation </span>
+            </div>
+
+            <h1>Checkout</h1>
+          </div>
+
+          <div class="shipping-notice">
+            <span class="material-symbols-outlined"> local_shipping </span>
+
+            <p>Livraison Partout au Maroc — 24/48H Express</p>
+          </div>
+        </div>
+
+        <!-- =========================================
+             MAIN LAYOUT
+        ========================================== -->
+
+        <div class="checkout-layout">
+          <!-- =====================================
+                 LEFT COLUMN
+            ====================================== -->
+
+          <div class="checkout-form">
+            <!-- =================================
+                     SECTION 01
+                ================================== -->
+
+            <section class="checkout-section">
+              <div class="section-title">
+                <span class="section-number"> 01 </span>
+
+                <h2>Customer Contact</h2>
+              </div>
+
+              <div class="form-grid">
+                <!-- First Name -->
+
+                <div class="form-group">
+                  <label for="first-name">
+                    First Name
+                    <span class="required">*</span>
+                  </label>
+
+                  <input
+                    id="first-name"
+                    type="text"
+                    placeholder="Amine"
+                    required
+                  />
+                </div>
+
+                <!-- Last Name -->
+
+                <div class="form-group">
+                  <label for="last-name">
+                    Last Name
+                    <span class="required">*</span>
+                  </label>
+
+                  <input
+                    id="last-name"
+                    type="text"
+                    placeholder="El Fassi"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- Phone -->
+
+              <div class="form-group">
+                <label for="phone-number">
+                  Moroccan Phone Number
+                  <span class="required">*</span>
+                </label>
+
+                <div class="phone-input">
+                  <span class="country-code"> 🇲🇦 +212 </span>
+
+                  <input
+                    id="phone-number"
+                    type="tel"
+                    placeholder="06 61 23 45 67"
+                    required
+                  />
+                </div>
+
+                <div class="form-help">
+                  <span class="material-symbols-outlined"> chat </span>
+
+                  <p>
+                    Our Moroccan logistics team will call or WhatsApp this
+                    number to confirm delivery before departure.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Email -->
+
+              <div class="form-group">
+                <label for="email-address">
+                  Email Address
+
+                  <span class="optional"> (for order receipt & tracking) </span>
+                </label>
+
+                <input
+                  id="email-address"
+                  type="email"
+                  placeholder="amine.elfassi@gmail.com"
+                />
+              </div>
+            </section>
+
+            <!-- =================================
+                     SECTION 02
+                ================================== -->
+
+            <section class="checkout-section">
+              <div class="section-title">
+                <span class="section-number"> 02 </span>
+
+                <h2>Delivery Address in Morocco</h2>
+              </div>
+
+              <div class="form-grid">
+                <!-- City -->
+
+                <div class="form-group">
+                  <label for="city">
+                    City
+                    <span class="required">*</span>
+                  </label>
+
+                  <div class="select-wrapper">
+                    <select id="city" required>
+                      <option value="" selected disabled>
+                        Select Moroccan City
+                      </option>
+
+                      <option value="casablanca">Casablanca</option>
+
+                      <option value="marrakech">Marrakech</option>
+
+                      <option value="rabat">Rabat</option>
+
+                      <option value="tangier">Tangier (Tanger)</option>
+
+                      <option value="agadir">Agadir</option>
+
+                      <option value="fes">Fès</option>
+
+                      <option value="meknes">Meknès</option>
+
+                      <option value="oujda">Oujda</option>
+
+                      <option value="kenitra">Kénitra</option>
+
+                      <option value="tetouan">Tétouan</option>
+
+                      <option value="mohammedia">Mohammedia</option>
+                    </select>
+
+                    <span class="material-symbols-outlined">
+                      keyboard_arrow_down
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Region -->
+
+                <div class="form-group">
+                  <label for="region">
+                    Region / Province
+                    <span class="required">*</span>
+                  </label>
+
+                  <div class="select-wrapper">
+                    <select id="region" required>
+                      <option value="" selected disabled>Select Region</option>
+
+                      <option value="casablanca-settat">
+                        Casablanca-Settat
+                      </option>
+
+                      <option value="rabat-sale-kenitra">
+                        Rabat-Salé-Kénitra
+                      </option>
+
+                      <option value="marrakech-safi">Marrakech-Safi</option>
+
+                      <option value="tanger-tetouan">
+                        Tanger-Tétouan-Al Hoceïma
+                      </option>
+
+                      <option value="souss-massa">Souss-Massa</option>
+
+                      <option value="fes-meknes">Fès-Meknès</option>
+
+                      <option value="oriental">L'Oriental</option>
+                    </select>
+
+                    <span class="material-symbols-outlined">
+                      keyboard_arrow_down
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Address -->
+
+              <div class="form-group">
+                <label for="street-address">
+                  Street Address / Quartier / Neighborhood
+                  <span class="required">*</span>
+                </label>
+
+                <input
+                  id="street-address"
+                  type="text"
+                  placeholder="Boulevard d'Anfa, Quartier Racine, No. 42"
+                  required
+                />
+              </div>
+
+              <div class="form-grid">
+                <!-- Apartment -->
+
+                <div class="form-group">
+                  <label for="apartment">
+                    Apartment / Floor / Residence
+
+                    <span class="optional"> (Optional) </span>
+                  </label>
+
+                  <input
+                    id="apartment"
+                    type="text"
+                    placeholder="Immeuble B, 3ème étage, Apt 14"
+                  />
+                </div>
+
+                <!-- Postal -->
+
+                <div class="form-group">
+                  <label for="postal-code">
+                    Postal Code
+
+                    <span class="optional"> (Optional) </span>
+                  </label>
+
+                  <input id="postal-code" type="text" placeholder="20050" />
+                </div>
+              </div>
+
+              <!-- Delivery Note -->
+
+              <div class="form-group">
+                <label for="delivery-note">
+                  Delivery Instructions
+
+                  <span class="optional"> (Optional) </span>
+                </label>
+
+                <textarea
+                  id="delivery-note"
+                  rows="3"
+                  placeholder="e.g., Leave with concierge or call before arriving"
+                ></textarea>
+              </div>
+            </section>
+
+            <!-- =================================
+                     SECTION 03
+                ================================== -->
+
+            <section class="checkout-section">
+              <div class="section-title">
+                <span class="section-number"> 03 </span>
+
+                <h2>Payment Method</h2>
+              </div>
+
+              <div class="payment-card">
+                <div class="payment-main">
+                  <div class="payment-check">
+                    <span class="material-symbols-outlined"> check </span>
+                  </div>
+
+                  <div class="payment-content">
+                    <div class="payment-heading">
+                      <span class="payment-title">
+                        <span class="material-symbols-outlined"> shield </span>
+
+                        Cash on Delivery (COD)
+                      </span>
+
+                      <span class="only-payment"> Only Payment Method </span>
+                    </div>
+
+                    <p class="payment-description">
+                      Pay with cash directly to the courier upon delivery.
+                      Please have the exact amount ready in Moroccan Dirhams
+                      (DH).
+                    </p>
+
+                    <div class="payment-meta">
+                      <span>
+                        <span class="material-symbols-outlined">
+                          payments
+                        </span>
+
+                        Paiement à la livraison
+                      </span>
+
+                      <span class="dot"> • </span>
+
+                      <span> No online cards required </span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Inspection -->
+
+                <div class="inspection">
+                  <span class="material-symbols-outlined"> verified </span>
+
+                  <p>
+                    <strong> Inspection Guarantee: </strong>
+
+                    You can open and inspect your parcel before handing payment
+                    to the Moroccan courier agent.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- =====================================
+                 RIGHT COLUMN
+            ====================================== -->
+
+          <aside class="order-column">
+            <div class="order-summary">
+              <!-- Summary Header -->
+
+              <div class="summary-header">
+                <h3>Order Summary</h3>
+
+                <span> 2 Items </span>
+              </div>
+
+              <!-- =================================
+                         PRODUCT 01
+                    ================================== -->
+
+              <div class="order-items">
+                <div class="order-item">
+                  <div class="item-image">
+                    <img
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCIL2G0l0XL3jSM_0IBzjV8-fQuq5tfaaQiu7nA4BQ9bOzTC9_KFSxS7BDVsVfacRAwP0fI2n_RJ_ae3KxsgQQUB1BlRNIDKtQwQIG-ExlNSnw2UTKXLwanu73ULCjMRw0ljHg8J8ATmADKfr28BrAvCH0XYWSjsLEh99szm9j6vxGuSyUtQq2OzVDUWvt0IogEeLqIJrAUhIQyF0z2Tin1VpbeBj24GhEqZyaUyia4-ZZayHIMHHsVg"
+                      alt="Tailored Minimalist Wool Bomber"
+                    />
+
+                    <span> 1x </span>
+                  </div>
+
+                  <div class="item-details">
+                    <div>
+                      <h4>Tailored Minimalist Wool Bomber</h4>
+
+                      <p>Noir Charcoal • Size: L</p>
+                    </div>
+
+                    <strong> 680 DH </strong>
+                  </div>
+                </div>
+
+                <!-- =================================
+                             PRODUCT 02
+                        ================================== -->
+
+                <div class="order-item">
+                  <div class="item-image">
+                    <img
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ2kFTjN9EGApOBNvyiycpQEXSYyQ12v0aMequvnrDCfy0verqNk0Y53LypgTZpPCSXp_xL5cdzXapjlRYwzdZKoI891MSGhMb7dlO6rZSnFjTl2O_3w7LYx7626VFxh9sNqJyx5uTTOhNdDF7yjivqeBQaDpH_PSsgTAoKz31UmylrL0poCeUJ91OI5HGK5Wbaea7b-E_XlA2Q3TlhrS4EA_EpMUslCigmy24ftR_eCIu38GtYYHDww"
+                      alt="Oversized Heavyweight Tee"
+                    />
+
+                    <span> 2x </span>
+                  </div>
+
+                  <div class="item-details">
+                    <div>
+                      <h4>Oversized Heavyweight Tee</h4>
+
+                      <p>Off-White Ecru • Size: M</p>
+                    </div>
+
+                    <strong> 498 DH </strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =================================
+                         CALCULATIONS
+                    ================================== -->
+
+              <div class="calculations">
+                <div class="calculation-row">
+                  <span> Subtotal </span>
+
+                  <strong> 1,178 DH </strong>
+                </div>
+
+                <div class="calculation-row">
+                  <div class="shipping-label">
+                    <span> Shipping to Morocco </span>
+
+                    <small> Expédition Gratuite </small>
+                  </div>
+
+                  <strong> 0 DH (FREE) </strong>
+                </div>
+              </div>
+
+              <!-- =================================
+                         TOTAL
+                    ================================== -->
+
+              <div class="total-row">
+                <div>
+                  <span> Total Due Upon Delivery </span>
+
+                  <small> Montant à régler au livreur </small>
+                </div>
+
+                <strong> 1,178 DH </strong>
+              </div>
+
+              <!-- =================================
+                         CONFIRM BUTTON
+                    ================================== -->
+
+              <button
+                class="confirm-order-button"
+                id="confirm-order-btn"
+                type="button"
+              >
+                <span> Confirm Order (Pay on Delivery) </span>
+
+                <span class="material-symbols-outlined"> arrow_forward </span>
+              </button>
+
+              <!-- =================================
+                         TRUST BADGES
+                    ================================== -->
+
+              <div class="trust-section">
+                <div class="trust-grid">
+                  <div class="trust-item">
+                    <span class="material-symbols-outlined"> lock </span>
+
+                    <span> 100% Zero Risk </span>
+                  </div>
+
+                  <div class="trust-item">
+                    <span class="material-symbols-outlined">
+                      local_shipping
+                    </span>
+
+                    <span> Direct COD Courier </span>
+                  </div>
+
+                  <div class="trust-item">
+                    <span class="material-symbols-outlined">
+                      support_agent
+                    </span>
+
+                    <span> VIP Support MA </span>
+                  </div>
+                </div>
+
+                <p class="trust-description">
+                  Cash collection managed via authorized national logistics
+                  network across all 12 Moroccan regions.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- =========================================
+         ORDER CONFIRMATION MODAL
+    ========================================== -->
+
+      <div class="modal-overlay hidden" id="order-modal">
+        <div class="confirmation-modal">
+          <div class="confirmation-icon">
+            <span class="material-symbols-outlined"> check_circle </span>
+          </div>
+
+          <div class="confirmation-text">
+            <span> Commande Enregistrée </span>
+
+            <h3>Order Confirmed</h3>
+
+            <p>
+              Thank you. Our Moroccan fulfillment agent will contact you shortly
+              via call/WhatsApp to validate your address before dispatch.
+            </p>
+          </div>
+
+          <div class="confirmation-details">
+            <div>
+              <span> Total Cash on Delivery: </span>
+
+              <strong> 1,178 DH </strong>
+            </div>
+
+            <div>
+              <span> Expected Arrival: </span>
+
+              <strong> 24 - 48 Hours </strong>
+            </div>
+          </div>
+
+          <button id="close-modal-btn" class="continue-button" type="button">
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
