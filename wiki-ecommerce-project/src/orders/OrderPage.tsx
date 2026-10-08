@@ -1,38 +1,317 @@
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import type { CartItem, OrderItem } from "../backend/Products";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import "./OrderPage.css";
-export function OrderPage() {
+
+type CartPageProps = {
+  cart: CartItem[];
+  orders: OrderItem[];
+};
+
+export function OrderPage({ cart, orders }: CartPageProps) {
+  const navigate = useNavigate();
+
+  // Reference for the main order page.
+  const pageRef = useRef<HTMLElement | null>(null);
+
+  // Reference for the status bar.
+  const statusBarRef = useRef<HTMLDivElement | null>(null);
+
+  // Reference for the main content container.
+  const mainContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Reference for the confirmation section.
+  const confirmationRef = useRef<HTMLElement | null>(null);
+
+  // Reference for the order grid.
+  const orderGridRef = useRef<HTMLElement | null>(null);
+
+  // Reference for the products module.
+  const productsModuleRef = useRef<HTMLDivElement | null>(null);
+
+  // Reference for the right order ledger.
+  const orderLedgerRef = useRef<HTMLDivElement | null>(null);
+
+  // Reference for the footer note.
+  const footerNoteRef = useRef<HTMLDivElement | null>(null);
+
+  // Gets the most recent order.
+  const latestOrder = [...orders].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  )[0];
+
+  // Animates the empty order state.
+  useEffect(() => {
+    if (latestOrder) return;
+
+    const ctx = gsap.context(() => {
+      gsap.from(".confirmation-header", {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, [latestOrder]);
+
+  // Animates the complete order confirmation page.
+  useEffect(() => {
+    if (!latestOrder || !pageRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const timeline = gsap.timeline({
+        defaults: {
+          ease: "power3.out",
+        },
+      });
+
+      timeline
+        .from(statusBarRef.current, {
+          opacity: 0,
+          y: -15,
+          duration: 0.55,
+        })
+        .from(
+          ".order-page-action",
+          {
+            opacity: 0,
+            x: -20,
+            duration: 0.5,
+          },
+          "-=0.25",
+        )
+        .from(
+          ".success-icon-wrapper",
+          {
+            opacity: 0,
+            scale: 0.65,
+            rotation: -8,
+            duration: 0.75,
+            ease: "back.out(1.7)",
+          },
+          "-=0.2",
+        )
+        .from(
+          ".eyebrow",
+          {
+            opacity: 0,
+            y: 15,
+            duration: 0.5,
+          },
+          "-=0.35",
+        )
+        .from(
+          ".confirmation-header h1",
+          {
+            opacity: 0,
+            y: 25,
+            duration: 0.7,
+          },
+          "-=0.3",
+        )
+        .from(
+          ".confirmation-text",
+          {
+            opacity: 0,
+            y: 15,
+            duration: 0.55,
+          },
+          "-=0.35",
+        )
+        .from(
+          ".delivery-notice",
+          {
+            opacity: 0,
+            y: 25,
+            duration: 0.7,
+          },
+          "-=0.3",
+        )
+        .from(
+          ".products-module",
+          {
+            opacity: 0,
+            y: 30,
+            duration: 0.7,
+          },
+          "-=0.35",
+        )
+        .from(
+          ".product-item",
+          {
+            opacity: 0,
+            y: 25,
+            duration: 0.55,
+            stagger: 0.1,
+          },
+          "-=0.35",
+        )
+        .from(
+          ".price-ledger",
+          {
+            opacity: 0,
+            y: 20,
+            duration: 0.6,
+          },
+          "-=0.3",
+        )
+        .from(
+          ".inspection-callout",
+          {
+            opacity: 0,
+            y: 20,
+            duration: 0.55,
+          },
+          "-=0.25",
+        )
+        .from(
+          orderLedgerRef.current,
+          {
+            opacity: 0,
+            x: 35,
+            duration: 0.75,
+          },
+          "-=0.65",
+        )
+        .from(
+          footerNoteRef.current,
+          {
+            opacity: 0,
+            y: 15,
+            duration: 0.5,
+          },
+          "-=0.25",
+        );
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, [latestOrder]);
+
+  // Adds a subtle animation to the success pulse.
+  useEffect(() => {
+    if (!latestOrder || !pageRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.to(".success-pulse", {
+        scale: 1.25,
+        opacity: 0,
+        duration: 1.8,
+        repeat: -1,
+        ease: "power2.out",
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, [latestOrder]);
+
+  if (!latestOrder) {
+    return (
+      <>
+        <title>WIKI — No Order</title>
+
+        <Header cart={cart} />
+
+        <main className="page" ref={pageRef}>
+          <div className="main-container">
+            <section className="confirmation-header">
+              <p className="eyebrow">NO ORDER FOUND</p>
+
+              <h1>NO CONFIRMED ORDER</h1>
+
+              <p className="confirmation-text">
+                There is currently no confirmed order to display.
+              </p>
+            </section>
+          </div>
+        </main>
+
+        <Footer />
+      </>
+    );
+  }
+
+  // Formats the order creation date.
+  const orderDate = new Date(latestOrder.createdAt).toLocaleDateString(
+    "en-GB",
+    {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    },
+  );
+
+  // Calculates the total number of ordered products.
+  const totalQuantity = latestOrder.items.reduce(
+    (total, item) => total + item.quantity,
+    0,
+  );
+
+  // Gets the customer's name.
+  const customerName = latestOrder.customer.name;
+
+  // Gets the customer's phone number.
+  const customerPhone = latestOrder.customer.phone;
+
+  // Gets the customer's email.
+  const customerEmail = latestOrder.customer.email;
+
+  // Gets the customer's address.
+  const customerAddress = latestOrder.customer.address;
+
+  // Gets the customer's city.
+  const customerCity = latestOrder.customer.city;
+
   return (
     <>
       <title>WIKI — Order Confirmed</title>
+
       <link
         href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap"
         rel="stylesheet"
       />
+
       <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet"
-      />{" "}
-      <Header />
-      <main className="page">
-        <div className="status-bar">
-          <span> SARTORIAL HERITAGE — CASABLANCA / PARIS </span>
+      />
+
+      <Header cart={cart} />
+
+      <main className="page" ref={pageRef}>
+        <div className="status-bar" ref={statusBarRef}>
+          <span>SARTORIAL HERITAGE — CASABLANCA / PARIS</span>
 
           <span className="status-shipping">
             EXPÉDITION EXPRESS NATIONALE 24/48H
           </span>
 
-          <span> RÉF : WK-84920 </span>
+          <span>RÉF : {latestOrder.id}</span>
         </div>
 
-        <div className="main-container">
-          <section className="confirmation-header">
+        <div className="main-container" ref={mainContainerRef}>
+          <div className="order-page-action">
+            <button
+              type="button"
+              className="shop-back-button"
+              onClick={() => navigate("/collectionsPage")}
+            >
+              <span className="material-symbols-outlined">arrow_back</span>
+
+              <span>CONTINUE SHOPPING</span>
+            </button>
+          </div>
+
+          <section className="confirmation-header" ref={confirmationRef}>
             <div className="success-icon-wrapper">
               <div className="success-pulse"></div>
 
               <div className="success-icon">
-                <span className="material-symbols-outlined"> check </span>
+                <span className="material-symbols-outlined">check</span>
               </div>
             </div>
 
@@ -41,9 +320,9 @@ export function OrderPage() {
             <h1>ORDER CONFIRMED</h1>
 
             <p className="confirmation-text">
-              Thank you for shopping with WIKI. Your order
-              <strong>#WK-84920</strong>
-              has been successfully logged into our atelier ledger.
+              Thank you for shopping with WIKI. Your order{" "}
+              <strong>#{latestOrder.id}</strong> has been successfully logged
+              into our atelier ledger.
             </p>
 
             <div className="delivery-notice">
@@ -56,131 +335,119 @@ export function OrderPage() {
 
                 <div>
                   <div className="delivery-title">
-                    <span> PROTOCOLE DE LIVRAISON MAROC </span>
+                    <span>PROTOCOLE DE LIVRAISON MAROC</span>
 
                     <span className="delivery-dot"></span>
 
-                    <span className="whatsapp-label"> WHATSAPP DIRECT </span>
+                    <span className="whatsapp-label">WHATSAPP DIRECT</span>
                   </div>
 
                   <p>
                     We will contact you via phone or WhatsApp (
-                    <strong>+212 6 61 23 45 67</strong>) to coordinate and
-                    confirm your ideal delivery window before our private
-                    courier is dispatched.
+                    <strong>{customerPhone}</strong>) to coordinate and confirm
+                    your ideal delivery window before our private courier is
+                    dispatched.
                   </p>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="order-grid">
+          <section className="order-grid" ref={orderGridRef}>
             <div className="left-column">
-              <div className="products-module">
+              <div className="products-module" ref={productsModuleRef}>
                 <div className="module-header">
                   <h2>Acquisitions</h2>
 
-                  <span className="eyebrow"> 2 PIECES SELECTED </span>
+                  <span className="eyebrow">
+                    {totalQuantity} {totalQuantity === 1 ? "PIECE" : "PIECES"}{" "}
+                    SELECTED
+                  </span>
                 </div>
 
-                <article className="product-item">
-                  <div className="product-image">
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuD772i6SuSPRNSOeS50f9aCw6hWSXzSci5HfNE4R-mHC1AYT619wPxlsM-0NCdM9xszvmhTFEuKc1vhouLhSxXpQiuQi_Sel47wNemQPenWNOWn07Xnl5MJd4n7mxNA70n11VoCc3yyv2DkPsaVvNtGT_qzAxmQ4uQVd2WEK_9DFl6E0MUEcCp9ETmEIadp_l2UpT63OAVmDuZpbRJnJ3oLlB_Ti7Z6M1NDJobUaP07yri9YHQm7QIi9A"
-                      alt="Tailored Minimalist Wool Bomber Jacket"
-                    />
-                  </div>
-
-                  <div className="product-details">
-                    <div>
-                      <div className="product-title-row">
-                        <h3>Tailored Minimalist Wool Bomber Jacket</h3>
-
-                        <span className="product-price"> 680 DH </span>
-                      </div>
-
-                      <p className="product-meta">
-                        Edition Noir Black • Size Large (L) • Qty 1
-                      </p>
-
-                      <span className="product-tag">
-                        Pure Wool Blend • Atelier Finish
-                      </span>
+                {latestOrder.items.map((item) => (
+                  <article
+                    className="product-item"
+                    key={`${item.id}-${item.selectColor}-${item.selectSize}`}
+                  >
+                    <div className="product-image">
+                      <img src={item.selectImage} alt={item.name} />
                     </div>
 
-                    <p className="product-reference">REF. WIKI-JKT-092</p>
-                  </div>
-                </article>
+                    <div className="product-details">
+                      <div>
+                        <div className="product-title-row">
+                          <h3>{item.name}</h3>
 
-                <article className="product-item">
-                  <div className="product-image">
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCESgRuoWbCPnvcTmQOxgkdiUNtgi2q-qo2UPs4yedsvMzslo_06UvYDRSkttiKVtUovAMPCIn3GRjZJDRR7_vAUlHWXqPhJQrRLzZpW11ThUTaGYog2WNwbDscfnzZSE8265APCH9LNTCGmHKaufx997hqOX5fRBXWkljtYDpLuHllgzRXWV-NfLFEKSunYJaRu_uu0sNaB1oy3sw4gws-k8K5tkAOZyoFisa98_60vSrDAZinfO_UKw"
-                      alt="Oversized Heavyweight Cotton Tee"
-                    />
-                  </div>
+                          <span className="product-price">
+                            {item.price * item.quantity} DH
+                          </span>
+                        </div>
 
-                  <div className="product-details">
-                    <div>
-                      <div className="product-title-row">
-                        <h3>Oversized Heavyweight Cotton Tee</h3>
+                        <p className="product-meta">
+                          {item.selectColor}
+                          {" • "}
+                          Size {item.selectSize}
+                          {" • "}
+                          Qty {item.quantity}
+                          {item.quantity > 1 && (
+                            <>
+                              {" • "}({item.price} DH each)
+                            </>
+                          )}
+                        </p>
 
-                        <span className="product-price"> 498 DH </span>
+                        <span className="product-tag">
+                          WIKI Atelier Selection
+                        </span>
                       </div>
 
-                      <p className="product-meta">
-                        Off-White • Size Medium (M) • Qty 2 • (249 DH each)
-                      </p>
-
-                      <span className="product-tag">
-                        300 GSM Organic Combed Cotton
-                      </span>
+                      <p className="product-reference">REF. {item.id}</p>
                     </div>
-
-                    <p className="product-reference">REF. WIKI-TEE-044</p>
-                  </div>
-                </article>
+                  </article>
+                ))}
 
                 <div className="price-ledger">
                   <div className="ledger-row">
-                    <span> Sous-total articles </span>
+                    <span>Sous-total articles</span>
 
-                    <strong> 1,178 DH </strong>
+                    <strong>{latestOrder.total} DH</strong>
                   </div>
 
                   <div className="ledger-row">
                     <span className="shipping-label">
-                      Expédition Nationale Express (Casablanca)
-                      <small> OFFERT </small>
+                      Expédition Nationale Express
+                      {customerCity && ` (${customerCity})`}
+                      <small>OFFERT</small>
                     </span>
 
-                    <strong> 0 DH </strong>
+                    <strong>0 DH</strong>
                   </div>
 
                   <div className="ledger-row">
-                    <span> Frais de Paiement à la Livraison </span>
+                    <span>Frais de Paiement à la Livraison</span>
 
-                    <strong> 0 DH </strong>
+                    <strong>0 DH</strong>
                   </div>
 
                   <div className="ledger-total">
                     <div>
-                      <span> Total à Régler </span>
+                      <span>Total à Régler</span>
 
-                      <small> ESPÈCES À RÉCEPTION </small>
+                      <small>ESPÈCES À RÉCEPTION</small>
                     </div>
 
                     <div className="total-value">
-                      <strong> 1,178 DH </strong>
+                      <strong>{latestOrder.total} DH</strong>
 
-                      <small> TVA INCLUSE </small>
+                      <small>TVA INCLUSE</small>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="inspection-callout">
-                <span className="material-symbols-outlined"> verified </span>
+                <span className="material-symbols-outlined">verified</span>
 
                 <div>
                   <h4>GARANTIE D'INSPECTION À LA PORTE</h4>
@@ -195,20 +462,20 @@ export function OrderPage() {
             </div>
 
             <div className="right-column">
-              <div className="order-ledger">
+              <div className="order-ledger" ref={orderLedgerRef}>
                 <h2 className="module-title">BORDEREAU DE COMMANDE</h2>
 
                 <dl className="order-details">
                   <div>
                     <dt>Numéro de Commande</dt>
 
-                    <dd>#WK-84920</dd>
+                    <dd>#{latestOrder.id}</dd>
                   </div>
 
                   <div>
                     <dt>Date d'Enregistrement</dt>
 
-                    <dd>24 Mai 2026</dd>
+                    <dd>{orderDate}</dd>
                   </div>
 
                   <div>
@@ -220,13 +487,13 @@ export function OrderPage() {
                   <div>
                     <dt>Montant Exigible</dt>
 
-                    <dd className="bold">1,178 DH</dd>
+                    <dd className="bold">{latestOrder.total} DH</dd>
                   </div>
                 </dl>
 
                 <div className="destination">
                   <div className="destination-heading">
-                    <span> ADRESSE DE DESTINATION </span>
+                    <span>ADRESSE DE DESTINATION</span>
 
                     <span className="material-symbols-outlined">
                       local_shipping
@@ -234,14 +501,12 @@ export function OrderPage() {
                   </div>
 
                   <div className="address-card">
-                    <p className="customer-name">Yassine El Mansouri</p>
+                    <p className="customer-name">{customerName}</p>
 
                     <p className="address">
-                      42 Boulevard d'Anfa, Quartier Racine
+                      {customerAddress}
                       <br />
-                      Grand Casablanca, Maroc
-                      <br />
-                      Code Postal: 20050
+                      {customerCity}, Maroc
                     </p>
 
                     <div className="phone">
@@ -249,142 +514,32 @@ export function OrderPage() {
                         phone_iphone
                       </span>
 
-                      <span> +212 6 61 23 45 67 </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="timeline-module">
-                <h2 className="module-title">
-                  ACHEMINEMENT & ÉTAPES SUIVANTES
-                </h2>
-
-                <div className="timeline">
-                  <div className="timeline-step completed">
-                    <div className="timeline-marker">
-                      <span className="material-symbols-outlined"> check </span>
+                      <span>{customerPhone}</span>
                     </div>
 
-                    <div className="timeline-content">
-                      <span> 1. ORDER PLACED </span>
+                    {customerEmail && (
+                      <div className="phone">
+                        <span className="material-symbols-outlined">mail</span>
 
-                      <p>
-                        Order registered in Casablanca logistics center.
-                        (Completed)
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="timeline-step active">
-                    <div className="timeline-marker">
-                      <span></span>
-                    </div>
-
-                    <div className="timeline-content">
-                      <span> 2. PHONE / WHATSAPP CONFIRMATION </span>
-
-                      <p>
-                        Our concierge connects via WhatsApp to validate
-                        availability and slot. (Pending)
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="timeline-step">
-                    <div className="timeline-marker"></div>
-
-                    <div className="timeline-content">
-                      <span> 3. HANDED TO MOROCCAN COURIER </span>
-
-                      <p>
-                        Direct dispatch in discreet luxury dustbags via private
-                        fleet.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="timeline-step">
-                    <div className="timeline-marker"></div>
-
-                    <div className="timeline-content">
-                      <span> 4. DOORSTEP SETTLEMENT </span>
-
-                      <p>
-                        Inspect garments and pay exactly
-                        <strong>1,178 DH</strong>
-                        in cash to the delivery specialist.
-                      </p>
-                    </div>
+                        <span>{customerEmail}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="experience-panel">
-            <div className="experience-top">
-              <div>
-                <h2>Poursuivre l'Expérience WIKI</h2>
-
-                <p>
-                  A confirmation document has been generated. Explore our
-                  seasonal permanent collection or contact our dedicated
-                  stylist.
-                </p>
-              </div>
-
-              <div className="cta-buttons">
-                <Link to="/all-products" className="primary-button">
-                  CONTINUE SHOPPING
-                </Link>
-
-                <Link to="#" className="secondary-button">
-                  <span className="material-symbols-outlined"> download </span>
-                  DOWNLOAD ORDER INVOICE (PDF)
-                </Link>
-              </div>
-            </div>
-
-            <div className="whatsapp-bar">
-              <div className="whatsapp-info">
-                <div className="whatsapp-icon">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path>
-                  </svg>
-                </div>
-
-                <div>
-                  <p>Besoin d'une modification immédiate ?</p>
-
-                  <span>
-                    Nos conseillers à Casablanca sont disponibles 7j/7 de 9h à
-                    21h.
-                  </span>
-                </div>
-              </div>
-
-              <a
-                className="whatsapp-button"
-                href="https://wa.me/212661234567?text=Bonjour%20WIKI,%20je%20souhaite%20des%20informations%20concernant%20ma%20commande%20WK-84920"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span> CHAT WITH WIKI MOROCCAN CONCIERGE ON WHATSAPP </span>
-
-                <span className="material-symbols-outlined">
-                  {" "}
-                  arrow_forward{" "}
-                </span>
-              </a>
-            </div>
-          </section>
-
-          <div className="footer-note">
-            WIKI MAISON DE COUTURE MASCULINE • CASABLANCA • MAROC
+          <div className="footer-note" ref={footerNoteRef}>
+            WIKI MAISON DE COUTURE MASCULINE
+            {" • "}
+            CASABLANCA
+            {" • "}
+            MAROC
           </div>
         </div>
       </main>
+
       <Footer />
     </>
   );

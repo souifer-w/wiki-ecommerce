@@ -132,6 +132,7 @@ select {
   -webkit-font-feature-settings: "liga";
 
   -webkit-font-smoothing: antialiased;
+  color: white !important;
 }
 
 /* =========================================================
@@ -419,7 +420,7 @@ h3 {
 .delivery-icon {
   flex-shrink: 0;
 
-  color: var(--primary);
+  color: var(--primary) !important;
 }
 
 .delivery-title {
@@ -814,7 +815,7 @@ h3 {
 .inspection-callout > .material-symbols-outlined {
   flex-shrink: 0;
 
-  color: var(--primary);
+  color: var(--primary) !important;
 
   font-size: 27px;
 }
@@ -996,7 +997,7 @@ h3 {
 }
 
 .phone .material-symbols-outlined {
-  color: var(--secondary);
+  color: var(--secondary) !important;
 
   font-size: 17px;
 }
@@ -1353,7 +1354,95 @@ h3 {
 .whatsapp-button .material-symbols-outlined {
   font-size: 17px;
 }
+.order-page-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 0 38px;
+}
 
+.shop-back-button {
+  min-width: 178px;
+  height: 44px;
+  padding: 0 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #d8d8d3;
+  background: #fff;
+  color: #090909;
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    gap 0.3s ease;
+}
+
+.shop-back-button .material-symbols-outlined {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 0.3s ease;
+  color: black !important;
+}
+
+.shop-back-button:hover {
+  background: #090909;
+  border-color: #090909;
+  color: #fff;
+  gap: 14px;
+  transform: translateY(-1px);
+}
+
+.shop-back-button:hover .material-symbols-outlined {
+  transform: translateX(-3px);
+  color: white !important;
+}
+
+.shop-back-button:active {
+  transform: translateY(0);
+}
+@media (max-width: 768px) {
+  .order-page-action {
+    margin-bottom: 30px;
+  }
+
+  .shop-back-button {
+    min-width: 145px;
+    height: 42px;
+    padding: 3px 5px;
+    font-size: 3.5px;
+    letter-spacing: 1.3px;
+  }
+
+  .shop-back-button .material-symbols-outlined {
+    font-size: 16px;
+    color: black !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-page-action {
+    margin-bottom: 25px;
+  }
+
+  .shop-back-button {
+    width: 100%;
+    max-width: 100px;
+    height: 42px;
+    font-size: 8px;
+    letter-spacing: 1.2px;
+  }
+}
 /* =========================================================
    FOOTER NOTE
 ========================================================= */

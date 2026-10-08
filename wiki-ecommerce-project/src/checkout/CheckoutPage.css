@@ -189,7 +189,7 @@ img {
 }
 
 .shipping-notice .material-symbols-outlined {
-  color: var(--primary);
+  color: var(--primary) !important;
   font-size: 18px;
 }
 
@@ -1035,11 +1035,13 @@ img {
 }
 
 .trust-item .material-symbols-outlined {
-  color: var(--primary);
+  color: black !important;
 
   font-size: 19px;
 }
-
+.form-grid .material-symbols-outlined {
+  color: #000 !important;
+}
 .trust-item span:last-child {
   color: var(--text);
 

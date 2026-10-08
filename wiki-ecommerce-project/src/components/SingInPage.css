@@ -1,0 +1,607 @@
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --wiki-black: #090909;
+  --wiki-black-soft: #111111;
+  --wiki-cream: #f5f4f0;
+  --wiki-white: #ffffff;
+  --wiki-border: #deddd8;
+  --wiki-text: #111111;
+  --wiki-muted: #77766f;
+  --wiki-error: #b42318;
+  --wiki-error-bg: #fff1ef;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.signin-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--wiki-cream);
+  color: var(--wiki-text);
+  font-family: "Hanken Grotesk", sans-serif;
+}
+
+/* Background */
+
+.signin-page::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: -280px;
+  left: -180px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: signinCircleOne 10s ease-in-out infinite;
+}
+
+.signin-page::after {
+  content: "";
+  position: absolute;
+  width: 650px;
+  height: 650px;
+  right: -350px;
+  bottom: -350px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: signinCircleTwo 12s ease-in-out infinite;
+}
+
+.signin-page {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+  background-size: 45px 45px;
+  background-position: center;
+}
+
+.signin-page > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes signinCircleOne {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(25px, 35px);
+  }
+}
+
+@keyframes signinCircleTwo {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-30px, -25px);
+  }
+}
+
+/* Container */
+
+.signin-container {
+  position: relative;
+  z-index: 5;
+  width: min(430px, calc(100% - 32px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo */
+
+.signin-logo {
+  position: relative;
+  margin-bottom: 25px;
+  color: var(--wiki-black);
+  font-family: "Bodoni Moda", serif;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.signin-logo::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  top: 3px;
+  right: -12px;
+  border-radius: 50%;
+  background: var(--wiki-black);
+  animation: signinBrandDot 2s ease-in-out infinite;
+}
+
+@keyframes signinBrandDot {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* Header */
+
+.signin-header {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.signin-header span {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #92918b;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+}
+
+.signin-header h1 {
+  margin: 0;
+  color: var(--wiki-text);
+  font-family: "Bodoni Moda", serif;
+  font-size: 34px;
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -1px;
+}
+
+.signin-header p {
+  max-width: 300px;
+  margin: 12px 0 0;
+  color: var(--wiki-muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+/* Form Card */
+
+.signin-form {
+  position: relative;
+  width: 100%;
+  padding: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.09),
+    0 8px 25px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+}
+
+.signin-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--wiki-black);
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Fields */
+
+.signin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.signin-field label {
+  color: #363631;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.signin-field input {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--wiki-border);
+  border-radius: 7px;
+  outline: none;
+  background: #fff;
+  color: var(--wiki-text);
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: 11px;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.signin-field input::placeholder {
+  color: #aaa9a3;
+}
+
+.signin-field input:hover {
+  border-color: #bdbcb6;
+}
+
+.signin-field input:focus {
+  border-color: var(--wiki-black);
+  box-shadow:
+    0 0 0 3px rgba(0, 0, 0, 0.035),
+    0 8px 20px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+
+/* Password */
+
+.signin-password {
+  position: relative;
+  width: 100%;
+}
+
+.signin-password input {
+  padding-right: 50px;
+}
+
+.signin-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #888780;
+  cursor: pointer;
+  transform: translateY(-50%);
+  z-index: 3;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.signin-password-toggle:hover {
+  color: #090909;
+  background: #f1f0ec;
+}
+
+.signin-password-toggle:active {
+  transform: translateY(-50%) scale(0.9);
+}
+
+.signin-password-toggle .material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-size: 19px;
+  font-weight: normal;
+  line-height: 1;
+  font-style: normal;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  transition: transform 0.25s ease;
+}
+
+.signin-password-toggle:hover .material-symbols-outlined {
+  transform: scale(1.08);
+}
+
+/* Error / Message */
+
+.signin-message {
+  min-height: 43px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(180, 35, 24, 0.15);
+  border-left: 3px solid var(--wiki-error);
+  border-radius: 7px;
+  background: var(--wiki-error-bg);
+  color: var(--wiki-error);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Sign In Button */
+
+.signin-submit {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 17px;
+  border: 1px solid var(--wiki-black);
+  border-radius: 7px;
+  background: var(--wiki-black);
+  color: white;
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.signin-submit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.15) 45%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.65s ease;
+}
+
+.signin-submit:hover:not(:disabled)::before {
+  transform: translateX(120%);
+}
+
+.signin-submit:hover:not(:disabled) {
+  background: #202020;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.16);
+}
+
+.signin-submit:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.signin-submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+/* Divider */
+
+.signin-divider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0;
+}
+
+.signin-divider span {
+  flex: 1;
+  height: 1px;
+  background: #e7e6e1;
+}
+
+.signin-divider p {
+  margin: 0;
+  color: #aaa9a3;
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+}
+
+/* Google Button */
+
+.google-signin {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 17px;
+  border: 1px solid var(--wiki-border);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--wiki-black);
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.google-signin:hover:not(:disabled) {
+  border-color: #bdbcb6;
+  background: #faf9f6;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.07);
+}
+
+.google-signin:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.google-signin:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.google-icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* Create Account */
+
+.signin-create {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 22px;
+  color: #aaa9a3;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-align: center;
+}
+
+.signin-create a {
+  color: var(--wiki-black);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.signin-create a:hover {
+  opacity: 0.55;
+}
+
+/* Back */
+
+.signin-back {
+  position: relative;
+  margin-top: 18px;
+  color: #aaa9a3;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.signin-back:hover {
+  color: var(--wiki-black);
+  transform: translateX(-3px);
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+  .signin-form {
+    padding: 35px;
+  }
+}
+
+@media (max-width: 520px) {
+  .signin-container {
+    width: min(100% - 24px, 430px);
+  }
+
+  .signin-logo {
+    margin-bottom: 20px;
+    font-size: 32px;
+  }
+
+  .signin-form {
+    padding: 30px 22px;
+    border-radius: 12px;
+  }
+
+  .signin-header {
+    margin-bottom: 27px;
+  }
+
+  .signin-header h1 {
+    font-size: 30px;
+  }
+
+  .signin-header p {
+    font-size: 10px;
+  }
+
+  .signin-create {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 380px) {
+  .signin-container {
+    width: calc(100% - 20px);
+  }
+
+  .signin-form {
+    padding: 26px 18px;
+  }
+
+  .signin-header h1 {
+    font-size: 27px;
+  }
+
+  .signin-field input {
+    height: 46px;
+  }
+
+  .signin-submit,
+  .google-signin,
+  .signin-admin {
+    height: 48px;
+  }
+}
+
+/* Reduced Motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .signin-page *,
+  .signin-page *::before,
+  .signin-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

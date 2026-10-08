@@ -1,8 +1,257 @@
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import gsap from "gsap";
+
+import type { CartItem, OrderItem } from "../backend/Products";
+import { saveOrder } from "../services/ordersService";
 import "./CheckoutPage.css";
-export function CheckoutPage() {
+
+type CartPageProps = {
+  cart: CartItem[];
+  setOrders: Dispatch<SetStateAction<OrderItem[]>>;
+  setCart: Dispatch<SetStateAction<CartItem[]>>;
+};
+
+export function CheckoutPage({ cart, setOrders, setCart }: CartPageProps) {
+  // Navigation function used after successfully creating an order.
+  const navigate = useNavigate();
+
+  // Main checkout form reference used by GSAP animations.
+  const checkoutPageRef = useRef<HTMLElement | null>(null);
+
+  // Header section reference for the initial entrance animation.
+  const checkoutHeaderRef = useRef<HTMLDivElement | null>(null);
+
+  // Form reference used for staggered form animations.
+  const checkoutFormRef = useRef<HTMLFormElement | null>(null);
+
+  // Order summary reference used for the desktop slide-in animation.
+  const orderSummaryRef = useRef<HTMLDivElement | null>(null);
+
+  // Confirm button reference used for hover and entrance animations.
+  const confirmButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  // Customer first name value.
+  const [firstName, setFirstName] = useState("");
+
+  // Customer last name value.
+  const [lastName, setLastName] = useState("");
+
+  // Customer Moroccan phone number.
+  const [phone, setPhone] = useState("");
+
+  // Optional customer email address.
+  const [email, setEmail] = useState("");
+
+  // Selected delivery city.
+  const [city, setCity] = useState("");
+
+  // Selected Moroccan region.
+  const [region, setRegion] = useState("");
+
+  // Customer street and neighborhood address.
+  const [streetAddress, setStreetAddress] = useState("");
+
+  // Prevents duplicate order submissions.
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Displays an error message when order creation fails.
+  const [message, setMessage] = useState("");
+
+  // Calculates the total number of products in the cart.
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+
+  // Calculates the complete cart price.
+  const totalPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+
+  // Handles normal entrance and interaction animations for the checkout page.
+  useEffect(() => {
+    const page = checkoutPageRef.current;
+
+    if (!page) {
+      return;
+    }
+
+    // Creates an isolated GSAP context for this component.
+    const context = gsap.context(() => {
+      // Animates the main checkout header.
+      gsap.from(".checkout-header", {
+        opacity: 0,
+        y: -20,
+        duration: 0.7,
+        ease: "power3.out",
+      });
+
+      // Animates the checkout form sections.
+      gsap.from(".checkout-section", {
+        opacity: 0,
+        y: 25,
+        duration: 0.7,
+        delay: 0.15,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+
+      // Animates the order summary from the right.
+      gsap.from(".order-summary", {
+        opacity: 0,
+        x: 30,
+        duration: 0.8,
+        delay: 0.25,
+        ease: "power3.out",
+      });
+
+      // Animates the individual order products.
+      gsap.from(".order-item", {
+        opacity: 0,
+        y: 12,
+        duration: 0.45,
+        delay: 0.5,
+        stagger: 0.08,
+        ease: "power2.out",
+      });
+
+      // Animates the order calculations.
+      gsap.from(".calculations", {
+        opacity: 0,
+        y: 12,
+        duration: 0.5,
+        delay: 0.65,
+        ease: "power2.out",
+      });
+
+      // Animates the final order total.
+      gsap.from(".total-row", {
+        opacity: 0,
+        y: 12,
+        duration: 0.5,
+        delay: 0.75,
+        ease: "power2.out",
+      });
+
+      // Animates the trust section.
+      gsap.from(".trust-section", {
+        opacity: 0,
+        y: 12,
+        duration: 0.5,
+        delay: 0.85,
+        ease: "power2.out",
+      });
+
+      // Animates the confirmation button.
+      gsap.from(confirmButtonRef.current, {
+        opacity: 0,
+        y: 10,
+        scale: 0.98,
+        duration: 0.6,
+        delay: 0.9,
+        ease: "power3.out",
+      });
+
+      // Adds a subtle hover animation to the confirmation button.
+      const button = confirmButtonRef.current;
+
+      if (button) {
+        const handleMouseEnter = () => {
+          if (button.disabled) {
+            return;
+          }
+
+          gsap.to(button, {
+            y: -2,
+            duration: 0.2,
+            ease: "power2.out",
+          });
+        };
+
+        // Returns the confirmation button to its normal position.
+        const handleMouseLeave = () => {
+          gsap.to(button, {
+            y: 0,
+            duration: 0.2,
+            ease: "power2.out",
+          });
+        };
+
+        button.addEventListener("mouseenter", handleMouseEnter);
+
+        button.addEventListener("mouseleave", handleMouseLeave);
+
+        // Removes the button event listeners when the page unmounts.
+        return () => {
+          button.removeEventListener("mouseenter", handleMouseEnter);
+
+          button.removeEventListener("mouseleave", handleMouseLeave);
+        };
+      }
+    }, page);
+
+    // Cleans up all GSAP animations when the component unmounts.
+    return () => {
+      context.revert();
+    };
+  }, []);
+
+  // Handles form submission and saves the customer's order.
+  const handleConfirmOrder = async () => {
+    if (cart.length === 0 || isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setMessage("");
+
+    // Creates the order object sent to the order service.
+    const newOrder: OrderItem = {
+      id: `WK-${Date.now()}`,
+      status: "Pending",
+      customer: {
+        name: `${firstName} ${lastName}`,
+        phone,
+        email,
+        address: streetAddress,
+        city,
+      },
+      items: [...cart],
+      total: totalPrice,
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      // Save the order to Firebase.
+      await saveOrder(newOrder);
+
+      // Add the newly created order to the local React state.
+      setOrders((currentOrders) => {
+        const updatedOrders = [...currentOrders, newOrder];
+
+        return updatedOrders;
+      });
+
+      // Clear the shopping cart after successful order creation.
+      setCart([]);
+
+      // Navigate to the order confirmation page.
+      navigate("/orderPage", {
+        replace: true,
+      });
+    } catch {
+      // Show an error message if Firebase/order creation fails.
+      setMessage(
+        "We could not save your order. Please check your connection and try again.",
+      );
+
+      // Allow the user to try again.
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <title>WIKI — Checkout</title>
@@ -19,41 +268,56 @@ export function CheckoutPage() {
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet"
       />
-      <Header />
-      <main className="checkout-page">
+
+      <Header cart={cart} />
+
+      <main ref={checkoutPageRef} className="checkout-page">
         <section className="checkout-container">
-          <div className="checkout-header">
+          <div ref={checkoutHeaderRef} className="checkout-header">
             <div className="header-left">
               <div className="breadcrumb">
-                <Link to="#"> Cart </Link>
+                <Link to="/cartPage">Cart</Link>
 
                 <span>/</span>
 
-                <strong> Shipping Details </strong>
+                <strong>Shipping Details</strong>
 
                 <span>/</span>
 
-                <span className="disabled"> Payment Confirmation </span>
+                <span className="disabled">Payment Confirmation</span>
               </div>
 
               <h1>Checkout</h1>
             </div>
 
             <div className="shipping-notice">
-              <span className="material-symbols-outlined">
-                {" "}
-                local_shipping{" "}
-              </span>
+              <span className="material-symbols-outlined">local_shipping</span>
 
               <p>Livraison Partout au Maroc — 24/48H Express</p>
             </div>
           </div>
 
           <div className="checkout-layout">
-            <div className="checkout-form">
+            <form
+              ref={checkoutFormRef}
+              id="checkout-form"
+              className="checkout-form"
+              onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                void handleConfirmOrder();
+              }}
+            >
+              {message && (
+                <div className="checkout-message" role="alert">
+                  <span className="material-symbols-outlined">error</span>
+
+                  <p>{message}</p>
+                </div>
+              )}
+
               <section className="checkout-section">
                 <div className="section-title">
-                  <span className="section-number"> 01 </span>
+                  <span className="section-number">01</span>
 
                   <h2>Customer Contact</h2>
                 </div>
@@ -61,28 +325,30 @@ export function CheckoutPage() {
                 <div className="form-grid">
                   <div className="form-group">
                     <label htmlFor="first-name">
-                      First Name
-                      <span className="required">*</span>
+                      First Name <span className="required">*</span>
                     </label>
 
                     <input
                       id="first-name"
                       type="text"
                       placeholder="Amine"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                       required
                     />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="last-name">
-                      Last Name
-                      <span className="required">*</span>
+                      Last Name <span className="required">*</span>
                     </label>
 
                     <input
                       id="last-name"
                       type="text"
                       placeholder="El Fassi"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       required
                     />
                   </div>
@@ -90,23 +356,24 @@ export function CheckoutPage() {
 
                 <div className="form-group">
                   <label htmlFor="phone-number">
-                    Moroccan Phone Number
-                    <span className="required">*</span>
+                    Moroccan Phone Number <span className="required">*</span>
                   </label>
 
                   <div className="phone-input">
-                    <span className="country-code"> 🇲🇦 +212 </span>
+                    <span className="country-code">🇲🇦 +212</span>
 
                     <input
                       id="phone-number"
                       type="tel"
                       placeholder="06 61 23 45 67"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                       required
                     />
                   </div>
 
                   <div className="form-help">
-                    <span className="material-symbols-outlined"> chat </span>
+                    <span className="material-symbols-outlined">chat</span>
 
                     <p>
                       Our Moroccan logistics team will call or WhatsApp this
@@ -117,10 +384,9 @@ export function CheckoutPage() {
 
                 <div className="form-group">
                   <label htmlFor="email-address">
-                    Email Address
+                    Email Address{" "}
                     <span className="optional">
-                      {" "}
-                      (for order receipt & tracking){" "}
+                      (for order receipt & tracking)
                     </span>
                   </label>
 
@@ -128,13 +394,15 @@ export function CheckoutPage() {
                     id="email-address"
                     type="email"
                     placeholder="amine.elfassi@gmail.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </section>
 
               <section className="checkout-section">
                 <div className="section-title">
-                  <span className="section-number"> 02 </span>
+                  <span className="section-number">02</span>
 
                   <h2>Delivery Address in Morocco</h2>
                 </div>
@@ -142,37 +410,41 @@ export function CheckoutPage() {
                 <div className="form-grid">
                   <div className="form-group">
                     <label htmlFor="city">
-                      City
-                      <span className="required">*</span>
+                      City <span className="required">*</span>
                     </label>
 
                     <div className="select-wrapper">
-                      <select id="city" required>
-                        <option value="" selected disabled>
+                      <select
+                        id="city"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>
                           Select Moroccan City
                         </option>
 
-                        <option value="casablanca">Casablanca</option>
+                        <option value="Casablanca">Casablanca</option>
 
-                        <option value="marrakech">Marrakech</option>
+                        <option value="Marrakech">Marrakech</option>
 
-                        <option value="rabat">Rabat</option>
+                        <option value="Rabat">Rabat</option>
 
-                        <option value="tangier">Tangier (Tanger)</option>
+                        <option value="Tangier">Tangier (Tanger)</option>
 
-                        <option value="agadir">Agadir</option>
+                        <option value="Agadir">Agadir</option>
 
-                        <option value="fes">Fès</option>
+                        <option value="Fès">Fès</option>
 
-                        <option value="meknes">Meknès</option>
+                        <option value="Meknès">Meknès</option>
 
-                        <option value="oujda">Oujda</option>
+                        <option value="Oujda">Oujda</option>
 
-                        <option value="kenitra">Kénitra</option>
+                        <option value="Kénitra">Kénitra</option>
 
-                        <option value="tetouan">Tétouan</option>
+                        <option value="Tétouan">Tétouan</option>
 
-                        <option value="mohammedia">Mohammedia</option>
+                        <option value="Mohammedia">Mohammedia</option>
                       </select>
 
                       <span className="material-symbols-outlined">
@@ -183,35 +455,39 @@ export function CheckoutPage() {
 
                   <div className="form-group">
                     <label htmlFor="region">
-                      Region / Province
-                      <span className="required">*</span>
+                      Region / Province <span className="required">*</span>
                     </label>
 
                     <div className="select-wrapper">
-                      <select id="region" required>
-                        <option value="" selected disabled>
+                      <select
+                        id="region"
+                        value={region}
+                        onChange={(e) => setRegion(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>
                           Select Region
                         </option>
 
-                        <option value="casablanca-settat">
+                        <option value="Casablanca-Settat">
                           Casablanca-Settat
                         </option>
 
-                        <option value="rabat-sale-kenitra">
+                        <option value="Rabat-Salé-Kénitra">
                           Rabat-Salé-Kénitra
                         </option>
 
-                        <option value="marrakech-safi">Marrakech-Safi</option>
+                        <option value="Marrakech-Safi">Marrakech-Safi</option>
 
-                        <option value="tanger-tetouan">
+                        <option value="Tanger-Tétouan-Al Hoceïma">
                           Tanger-Tétouan-Al Hoceïma
                         </option>
 
-                        <option value="souss-massa">Souss-Massa</option>
+                        <option value="Souss-Massa">Souss-Massa</option>
 
-                        <option value="fes-meknes">Fès-Meknès</option>
+                        <option value="Fès-Meknès">Fès-Meknès</option>
 
-                        <option value="oriental">L'Oriental</option>
+                        <option value="L'Oriental">L'Oriental</option>
                       </select>
 
                       <span className="material-symbols-outlined">
@@ -223,7 +499,7 @@ export function CheckoutPage() {
 
                 <div className="form-group">
                   <label htmlFor="street-address">
-                    Street Address / Quartier / Neighborhood
+                    Street Address / Quartier / Neighborhood{" "}
                     <span className="required">*</span>
                   </label>
 
@@ -231,213 +507,101 @@ export function CheckoutPage() {
                     id="street-address"
                     type="text"
                     placeholder="Boulevard d'Anfa, Quartier Racine, No. 42"
+                    value={streetAddress}
+                    onChange={(e) => setStreetAddress(e.target.value)}
                     required
                   />
                 </div>
-
-                <div className="form-grid">
-                  <div className="form-group">
-                    <label htmlFor="apartment">
-                      Apartment / Floor / Residence
-                      <span className="optional"> (Optional) </span>
-                    </label>
-
-                    <input
-                      id="apartment"
-                      type="text"
-                      placeholder="Immeuble B, 3ème étage, Apt 14"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="postal-code">
-                      Postal Code
-                      <span className="optional"> (Optional) </span>
-                    </label>
-
-                    <input id="postal-code" type="text" placeholder="20050" />
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="delivery-note">
-                    Delivery Instructions
-                    <span className="optional"> (Optional) </span>
-                  </label>
-
-                  <textarea
-                    id="delivery-note"
-                    rows={3}
-                    placeholder="e.g., Leave with concierge or call before arriving"
-                  ></textarea>
-                </div>
               </section>
-
-              <section className="checkout-section">
-                <div className="section-title">
-                  <span className="section-number"> 03 </span>
-
-                  <h2>Payment Method</h2>
-                </div>
-
-                <div className="payment-card">
-                  <div className="payment-main">
-                    <div className="payment-check">
-                      <span className="material-symbols-outlined"> check </span>
-                    </div>
-
-                    <div className="payment-content">
-                      <div className="payment-heading">
-                        <span className="payment-title">
-                          <span className="material-symbols-outlined">
-                            {" "}
-                            shield{" "}
-                          </span>
-                          Cash on Delivery (COD)
-                        </span>
-
-                        <span className="only-payment">
-                          {" "}
-                          Only Payment Method{" "}
-                        </span>
-                      </div>
-
-                      <p className="payment-description">
-                        Pay with cash directly to the courier upon delivery.
-                        Please have the exact amount ready in Moroccan Dirhams
-                        (DH).
-                      </p>
-
-                      <div className="payment-meta">
-                        <span>
-                          <span className="material-symbols-outlined">
-                            payments
-                          </span>
-                          Paiement à la livraison
-                        </span>
-
-                        <span className="dot"> • </span>
-
-                        <span> No online cards required </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="inspection">
-                    <span className="material-symbols-outlined">
-                      {" "}
-                      verified{" "}
-                    </span>
-
-                    <p>
-                      <strong> Inspection Guarantee: </strong>
-                      You can open and inspect your parcel before handing
-                      payment to the Moroccan courier agent.
-                    </p>
-                  </div>
-                </div>
-              </section>
-            </div>
+            </form>
 
             <aside className="order-column">
-              <div className="order-summary">
+              <div ref={orderSummaryRef} className="order-summary">
                 <div className="summary-header">
                   <h3>Order Summary</h3>
 
-                  <span> 2 Items </span>
+                  <span>{totalQuantity} Items</span>
                 </div>
 
                 <div className="order-items">
-                  <div className="order-item">
-                    <div className="item-image">
-                      <img
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCIL2G0l0XL3jSM_0IBzjV8-fQuq5tfaaQiu7nA4BQ9bOzTC9_KFSxS7BDVsVfacRAwP0fI2n_RJ_ae3KxsgQQUB1BlRNIDKtQwQIG-ExlNSnw2UTKXLwanu73ULCjMRw0ljHg8J8ATmADKfr28BrAvCH0XYWSjsLEh99szm9j6vxGuSyUtQq2OzVDUWvt0IogEeLqIJrAUhIQyF0z2Tin1VpbeBj24GhEqZyaUyia4-ZZayHIMHHsVg"
-                        alt="Tailored Minimalist Wool Bomber"
-                      />
+                  {cart.map((item) => (
+                    <div
+                      className="order-item"
+                      key={`${item.id}-${item.selectColor}-${item.selectSize}`}
+                    >
+                      <div className="item-image">
+                        <img src={item.selectImage} alt={item.name} />
 
-                      <span> 1x </span>
-                    </div>
-
-                    <div className="item-details">
-                      <div>
-                        <h4>Tailored Minimalist Wool Bomber</h4>
-
-                        <p>Noir Charcoal • Size: L</p>
+                        <span>{item.quantity}x</span>
                       </div>
 
-                      <strong> 680 DH </strong>
-                    </div>
-                  </div>
+                      <div className="item-details">
+                        <div>
+                          <h4>{item.name}</h4>
 
-                  <div className="order-item">
-                    <div className="item-image">
-                      <img
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ2kFTjN9EGApOBNvyiycpQEXSYyQ12v0aMequvnrDCfy0verqNk0Y53LypgTZpPCSXp_xL5cdzXapjlRYwzdZKoI891MSGhMb7dlO6rZSnFjTl2O_3w7LYx7626VFxh9sNqJyx5uTTOhNdDF7yjivqeBQaDpH_PSsgTAoKz31UmylrL0poCeUJ91OI5HGK5Wbaea7b-E_XlA2Q3TlhrS4EA_EpMUslCigmy24ftR_eCIu38GtYYHDww"
-                        alt="Oversized Heavyweight Tee"
-                      />
+                          <p>
+                            {item.selectColor} • Size: {item.selectSize}
+                          </p>
+                        </div>
 
-                      <span> 2x </span>
-                    </div>
-
-                    <div className="item-details">
-                      <div>
-                        <h4>Oversized Heavyweight Tee</h4>
-
-                        <p>Off-White Ecru • Size: M</p>
+                        <strong>{item.price * item.quantity} DH</strong>
                       </div>
-
-                      <strong> 498 DH </strong>
                     </div>
-                  </div>
+                  ))}
                 </div>
 
                 <div className="calculations">
                   <div className="calculation-row">
-                    <span> Subtotal </span>
+                    <span>Subtotal</span>
 
-                    <strong> 1,178 DH </strong>
+                    <strong>{totalPrice} DH</strong>
                   </div>
 
                   <div className="calculation-row">
                     <div className="shipping-label">
-                      <span> Shipping to Morocco </span>
+                      <span>Shipping to Morocco</span>
 
-                      <small> Expédition Gratuite </small>
+                      <small>Expédition Gratuite</small>
                     </div>
 
-                    <strong> 0 DH (FREE) </strong>
+                    <strong>0 DH (FREE)</strong>
                   </div>
                 </div>
 
                 <div className="total-row">
                   <div>
-                    <span> Total Due Upon Delivery </span>
+                    <span>Total Due Upon Delivery</span>
 
-                    <small> Montant à régler au livreur </small>
+                    <small>Montant à régler au livreur</small>
                   </div>
 
-                  <strong> 1,178 DH </strong>
+                  <strong>{totalPrice} DH</strong>
                 </div>
 
                 <button
+                  ref={confirmButtonRef}
                   className="confirm-order-button"
-                  id="confirm-order-btn"
-                  type="button"
+                  type="submit"
+                  form="checkout-form"
+                  disabled={isSubmitting}
                 >
-                  <span> Confirm Order (Pay on Delivery) </span>
+                  <span>
+                    {isSubmitting
+                      ? "Saving Order..."
+                      : "Confirm Order (Pay on Delivery)"}
+                  </span>
 
                   <span className="material-symbols-outlined">
-                    {" "}
-                    arrow_forward{" "}
+                    {isSubmitting ? "progress_activity" : "arrow_forward"}
                   </span>
                 </button>
 
                 <div className="trust-section">
                   <div className="trust-grid">
                     <div className="trust-item">
-                      <span className="material-symbols-outlined"> lock </span>
+                      <span className="material-symbols-outlined">lock</span>
 
-                      <span> 100% Zero Risk </span>
+                      <span>100% Zero Risk</span>
                     </div>
 
                     <div className="trust-item">
@@ -445,7 +609,7 @@ export function CheckoutPage() {
                         local_shipping
                       </span>
 
-                      <span> Direct COD Courier </span>
+                      <span>Direct COD Courier</span>
                     </div>
 
                     <div className="trust-item">
@@ -453,7 +617,7 @@ export function CheckoutPage() {
                         support_agent
                       </span>
 
-                      <span> VIP Support MA </span>
+                      <span>VIP Support MA</span>
                     </div>
                   </div>
 
@@ -466,49 +630,8 @@ export function CheckoutPage() {
             </aside>
           </div>
         </section>
-
-        <div className="modal-overlay hidden" id="order-modal">
-          <div className="confirmation-modal">
-            <div className="confirmation-icon">
-              <span className="material-symbols-outlined"> check_circle </span>
-            </div>
-
-            <div className="confirmation-text">
-              <span> Commande Enregistrée </span>
-
-              <h3>Order Confirmed</h3>
-
-              <p>
-                Thank you. Our Moroccan fulfillment agent will contact you
-                shortly via call/WhatsApp to validate your address before
-                dispatch.
-              </p>
-            </div>
-
-            <div className="confirmation-details">
-              <div>
-                <span> Total Cash on Delivery: </span>
-
-                <strong> 1,178 DH </strong>
-              </div>
-
-              <div>
-                <span> Expected Arrival: </span>
-
-                <strong> 24 - 48 Hours </strong>
-              </div>
-            </div>
-
-            <button
-              id="close-modal-btn"
-              className="continue-button"
-              type="button"
-            >
-              Continue Shopping
-            </button>
-          </div>
-        </div>
       </main>
+
       <Footer />
     </>
   );

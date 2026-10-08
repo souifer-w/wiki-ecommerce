@@ -156,9 +156,10 @@ h3 {
    MATERIAL SYMBOLS
 ========================================================= */
 
-.material-symbols-outlined {
+.cod-information .material-symbols-outlined,
+.inspect-label .material-symbols-outlined {
   font-family: "Material Symbols Outlined";
-
+  color: black !important;
   font-weight: normal;
 
   font-style: normal;
@@ -1079,60 +1080,47 @@ main {
    SIZE
 ========================================================= */
 
+/* =========================================================
+   SIZE
+========================================================= */
+
 .size-options {
   display: grid;
-
   grid-template-columns: repeat(6, 1fr);
-
   gap: 5px;
 }
 
-.size-options label {
-  position: relative;
-
-  cursor: pointer;
-}
-
-.size-options input {
-  position: absolute;
-
-  opacity: 0;
-}
-
-.size-options label span {
+.size-option {
   height: 46px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
-  background: var(--surface-low);
+  background: transparent;
+  color: var(--text);
+
+  border: 1px solid var(--surface-high);
+  cursor: pointer;
 
   font-size: 11px;
 
-  transition: all var(--transition);
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition);
 }
 
-.size-options label:hover span {
+/* Hover */
+.size-option:hover {
   background: var(--surface-high);
 }
 
-.size-options input:checked + span {
+/* SELECTED SIZE ONLY */
+.size-option.active {
   background: var(--black);
-
   color: var(--white);
-}
-
-.size-options label.disabled {
-  cursor: not-allowed;
-}
-
-.size-options label.disabled span {
-  opacity: 0.35;
-
-  text-decoration: line-through;
+  border-color: var(--black);
 }
 
 .model-note {
@@ -1279,6 +1267,7 @@ main {
 
 .guarantee-item .material-symbols-outlined {
   font-size: 18px;
+  color: black !important;
 }
 
 .guarantee-item strong {
@@ -1759,7 +1748,42 @@ main {
 
   background: var(--white);
 }
+.add-cart {
+  position: relative;
+}
 
+.cart-added {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+
+  background: #111;
+  color: #fff;
+
+  padding: 9px 13px;
+
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+
+  white-space: nowrap;
+  border-radius: 4px;
+
+  animation: cartAdded 0.25s ease forwards;
+}
+
+@keyframes cartAdded {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* =========================================================
    CHECKOUT SUMMARY
 ========================================================= */
@@ -1985,7 +2009,77 @@ footer {
 .footer-bottom a:hover {
   color: var(--black);
 }
+.product-loading {
+  min-height: 100vh;
+  width: 100%;
+  background: #f5f4f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.product-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.product-loading-logo {
+  width: 58px;
+  height: 58px;
+  background: #090909;
+  color: #f5f4f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Bodoni Moda", serif;
+  font-size: 32px;
+  font-weight: 500;
+  animation: productLogoPulse 1.6s ease-in-out infinite;
+}
+
+.product-loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(9, 9, 9, 0.15);
+  border-top-color: #090909;
+  border-radius: 50%;
+  animation: productLoadingSpin 0.8s linear infinite;
+}
+
+.product-loading-content p {
+  margin: 0;
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #090909;
+}
+
+@keyframes productLoadingSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes productLogoPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.65;
+    transform: scale(0.96);
+  }
+}
 /* =========================================================
    TABLET
 ========================================================= */

@@ -1,8 +1,280 @@
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Link } from "react-router-dom";
+import type { CartItem } from "../backend/Products";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import "./CartPage.css";
-export function CartPage() {
+
+type CartPageProps = {
+  setCart: Dispatch<SetStateAction<CartItem[]>>;
+  cart: CartItem[];
+};
+
+export function CartPage({ cart, setCart }: CartPageProps) {
+  // Reference for the main cart page.
+  const cartPageRef = useRef<HTMLElement | null>(null);
+
+  // Reference for the empty cart state.
+  const emptyCartRef = useRef<HTMLDivElement | null>(null);
+
+  // Reference for the breadcrumb section.
+  const breadcrumbRef = useRef<HTMLElement | null>(null);
+
+  // Reference for the cart heading.
+  const cartHeadingRef = useRef<HTMLDivElement | null>(null);
+
+  // Reference for the cart layout.
+  const cartLayoutRef = useRef<HTMLDivElement | null>(null);
+
+  // Reference for the cart items container.
+  const cartItemsRef = useRef<HTMLDivElement | null>(null);
+
+  // Reference for the cart right side.
+  const cartRightRef = useRef<HTMLElement | null>(null);
+
+  // Removes a specific product variant from the cart.
+  const removeFromCart = (id: number, color: string, size: string) => {
+    setCart((prev) =>
+      prev.filter(
+        (item) =>
+          !(
+            item.id === id &&
+            item.selectColor === color &&
+            item.selectSize === size
+          ),
+      ),
+    );
+  };
+
+  // Calculates the total number of products.
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+
+  // Calculates the total cart price.
+  const totalPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+
+  // Animates the empty cart state.
+  useEffect(() => {
+    if (!emptyCartRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.set(emptyCartRef.current, {
+        opacity: 0,
+        y: 35,
+      });
+
+      gsap.to(emptyCartRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: "power3.out",
+      });
+
+      gsap.from(".empty-icon", {
+        scale: 0.7,
+        opacity: 0,
+        rotation: -8,
+        duration: 0.8,
+        delay: 0.15,
+        ease: "back.out(1.7)",
+      });
+
+      gsap.from(".empty-cart h3", {
+        opacity: 0,
+        y: 20,
+        duration: 0.7,
+        delay: 0.25,
+        ease: "power3.out",
+      });
+
+      gsap.from(".empty-cart p", {
+        opacity: 0,
+        y: 15,
+        duration: 0.7,
+        delay: 0.35,
+        ease: "power3.out",
+      });
+
+      gsap.from(".empty-cart a", {
+        opacity: 0,
+        y: 15,
+        duration: 0.7,
+        delay: 0.45,
+        ease: "power3.out",
+      });
+    }, emptyCartRef);
+
+    return () => ctx.revert();
+  }, []);
+  // Animates the main cart page when products exist.
+  useEffect(() => {
+    if (!cartPageRef.current || cart.length === 0) return;
+
+    const ctx = gsap.context(() => {
+      const timeline = gsap.timeline({
+        defaults: {
+          ease: "power3.out",
+        },
+      });
+
+      timeline
+        .from(breadcrumbRef.current, {
+          opacity: 0,
+          y: -15,
+          duration: 0.6,
+        })
+        .from(
+          cartHeadingRef.current,
+          {
+            opacity: 0,
+            y: 25,
+            duration: 0.7,
+          },
+          "-=0.35",
+        )
+        .from(
+          ".shipping-card",
+          {
+            opacity: 0,
+            y: 25,
+            duration: 0.7,
+          },
+          "-=0.4",
+        )
+        .fromTo(
+          ".cart-item",
+          {
+            opacity: 0,
+            y: 35,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            stagger: 0.12,
+            clearProps: "opacity,transform",
+          },
+          "-=0.35",
+        )
+        .from(
+          ".return-navigation",
+          {
+            opacity: 0,
+            y: 15,
+            duration: 0.5,
+          },
+          "-=0.25",
+        )
+        .from(
+          cartRightRef.current,
+          {
+            opacity: 0,
+            x: 35,
+            duration: 0.8,
+          },
+          "-=0.65",
+        );
+    }, cartPageRef);
+
+    return () => ctx.revert();
+  }, [cart.length]);
+
+  // Animates the cart when its quantity or price changes.
+  useEffect(() => {
+    if (!cartPageRef.current || cart.length === 0) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        "#cartHeaderTitle",
+        {
+          scale: 0.98,
+          opacity: 0.7,
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.35,
+          ease: "power2.out",
+        },
+      );
+
+      gsap.fromTo(
+        "#summaryItemCount",
+        {
+          scale: 1.15,
+        },
+        {
+          scale: 1,
+          duration: 0.35,
+          ease: "back.out(2)",
+        },
+      );
+
+      gsap.fromTo(
+        "#subtotalDisplay",
+        {
+          y: 5,
+          opacity: 0.6,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.35,
+          ease: "power2.out",
+        },
+      );
+
+      gsap.fromTo(
+        "#totalDisplay",
+        {
+          scale: 1.04,
+          opacity: 0.7,
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.4,
+          ease: "back.out(1.7)",
+        },
+      );
+    }, cartPageRef);
+
+    return () => ctx.revert();
+  }, [totalQuantity, totalPrice, cart.length]);
+
+  if (cart.length === 0) {
+    return (
+      <>
+        <title>WIKI — Your Bag</title>
+
+        <Header cart={cart} />
+
+        <main className="cart-page" ref={cartPageRef}>
+          <div className="empty-cart" id="cartEmptyState" ref={emptyCartRef}>
+            <div className="empty-icon">
+              <span className="material-symbols-outlined">shopping_bag</span>
+            </div>
+
+            <h3>YOUR BAG IS CURRENTLY EMPTY</h3>
+
+            <p>
+              Explore our tailored modern essentials crafted with heavyweight
+              textiles for effortless everyday refinement.
+            </p>
+
+            <Link to="/collectionsPage">EXPLORE COLLECTION</Link>
+          </div>
+        </main>
+
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <title>WIKI — Shopping Cart</title>
@@ -16,9 +288,11 @@ export function CartPage() {
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
         rel="stylesheet"
       />
-      <Header />
-      <main className="main-content">
-        <section className="breadcrumb-section">
+
+      <Header cart={cart} />
+
+      <main className="main-content" ref={cartPageRef}>
+        <section className="breadcrumb-section" ref={breadcrumbRef}>
           <div className="container breadcrumb-wrapper">
             <div className="breadcrumb">
               <Link to="#">HOME</Link>
@@ -27,39 +301,18 @@ export function CartPage() {
 
               <strong>BAG &amp; ORDER REVIEW</strong>
             </div>
-
-            <div className="checkout-progress">
-              <div className="progress-step active">
-                <span>1</span>
-                <strong>SHOPPING BAG</strong>
-              </div>
-
-              <div className="progress-line"></div>
-
-              <div className="progress-step">
-                <span>2</span>
-                <strong>DELIVERY INFO (COD)</strong>
-              </div>
-
-              <div className="progress-line"></div>
-
-              <div className="progress-step">
-                <span>3</span>
-                <strong>CONFIRMATION</strong>
-              </div>
-            </div>
           </div>
         </section>
 
         <section className="cart-section">
           <div className="container">
-            <div className="cart-heading">
+            <div className="cart-heading" ref={cartHeadingRef}>
               <div>
                 <span className="locations">
                   RABAT • CASABLANCA • MARRAKECH • TANGIER
                 </span>
 
-                <h1 id="cartHeaderTitle">YOUR CART (2 ITEMS)</h1>
+                <h1 id="cartHeaderTitle">YOUR CART ({totalQuantity} ITEMS)</h1>
               </div>
 
               <div className="inspection-note">
@@ -72,7 +325,7 @@ export function CartPage() {
               </div>
             </div>
 
-            <div className="cart-layout">
+            <div className="cart-layout" ref={cartLayoutRef}>
               <div className="cart-left">
                 <div className="shipping-card">
                   <div className="shipping-top">
@@ -97,210 +350,131 @@ export function CartPage() {
                   </p>
                 </div>
 
-                <div className="cart-items" id="cartItemsList">
-                  <article
-                    className="cart-item"
-                    data-price="680"
-                    id="cart-item-1"
-                  >
-                    <div className="product-image">
-                      <img
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuB609XdgiAhAtM9ZsdLN6T0i7en8oytn4urT_Tr_Atrc9XP8cfg8TWWMfiwbdzydVpfBmRtzyQ7m4R2kxA_Eh7QRo1g3cv4UmC_-gNSQ24hnkRlX_V5oZyjG3UMnBkV06sryvhB9MDThc9_CzJsLyrm5fMR1z9PcDbtil7UknUMmbPHL9MX4iIoNMdRXpLX2EMTWDoke01C5md_msFDeLP9xgYTE03m1UF0mtSe0x75iO9ciqgq_hbl5Q"
-                        alt="Tailored Minimalist Wool Bomber Jacket"
-                      />
-
-                      <span className="product-badge"> AUTUMN/WINTER </span>
-                    </div>
-
-                    <div className="product-info">
-                      <div>
-                        <div className="product-header">
-                          <div>
-                            <span className="product-category">
-                              OUTERWEAR • TAILORED CUT
-                            </span>
-
-                            <h2>Tailored Minimalist Wool Bomber Jacket</h2>
+                <div
+                  className="cart-items"
+                  id="cartItemsList"
+                  ref={cartItemsRef}
+                >
+                  {cart.map((item) => {
+                    return (
+                      <>
+                        {" "}
+                        <article className="cart-item">
+                          <div className="product-image">
+                            <img src={item.selectImage} alt={item.name} />
                           </div>
 
-                          <div className="product-price">
-                            <strong id="price-display-1"> 680 DH </strong>
+                          <div className="product-info">
+                            <div>
+                              <div className="product-header">
+                                <div>
+                                  <span className="product-category">
+                                    OUTERWEAR • TAILORED CUT
+                                  </span>
 
-                            <span> 680 DH each </span>
+                                  <h2>{item.name}</h2>
+                                </div>
+
+                                <div className="product-price">
+                                  <strong id="price-display-1">
+                                    {" "}
+                                    {item.price}DH{" "}
+                                  </strong>
+                                </div>
+                              </div>
+
+                              <div className="product-details">
+                                <div>
+                                  <span>Size:</span>
+                                  <strong>{item.selectSize}</strong>
+                                </div>
+
+                                <div>
+                                  <span>Color:</span>
+                                  <i
+                                    className="color-selected"
+                                    style={{
+                                      backgroundColor: item.selectColor,
+                                    }}
+                                  ></i>
+                                  <strong>{item.selectColor}</strong>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="product-controls">
+                              <div className="quantity">
+                                <button
+                                  aria-label="Decrease quantity"
+                                  onClick={() => {
+                                    setCart((prev) =>
+                                      prev.map((cartItem) =>
+                                        cartItem.id === item.id
+                                          ? {
+                                              ...cartItem,
+                                              quantity: Math.max(
+                                                1,
+                                                cartItem.quantity - 1,
+                                              ),
+                                            }
+                                          : cartItem,
+                                      ),
+                                    );
+                                  }}
+                                >
+                                  <span className="material-symbols-outlined">
+                                    remove
+                                  </span>
+                                </button>
+
+                                <span id="qty-val-1"> {item.quantity} </span>
+
+                                <button
+                                  aria-label="Increase quantity"
+                                  onClick={() => {
+                                    setCart((prev) =>
+                                      prev.map((cartItem) =>
+                                        cartItem.id === item.id
+                                          ? {
+                                              ...cartItem,
+                                              quantity: cartItem.quantity + 1,
+                                            }
+                                          : cartItem,
+                                      ),
+                                    );
+                                  }}
+                                >
+                                  <span className="material-symbols-outlined">
+                                    {" "}
+                                    add{" "}
+                                  </span>
+                                </button>
+                              </div>
+
+                              <div className="product-actions">
+                                <button
+                                  className="remove-button"
+                                  onClick={() => {
+                                    removeFromCart(
+                                      item.id,
+                                      item.selectColor,
+                                      item.selectSize,
+                                    );
+                                  }}
+                                >
+                                  <span className="material-symbols-outlined">
+                                    delete_outline
+                                  </span>
+
+                                  <span> Remove </span>
+                                </button>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-
-                        <div className="product-details">
-                          <div>
-                            <span>Size:</span>
-                            <strong>L</strong>
-                          </div>
-
-                          <div>
-                            <span>Color:</span>
-                            <i className="color-black"></i>
-                            <strong>Noir Black</strong>
-                          </div>
-
-                          <div>
-                            <span>SKU:</span>
-                            <strong>WK-BM-09</strong>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="product-controls">
-                        <div className="quantity">
-                          <button aria-label="Decrease quantity">
-                            <span className="material-symbols-outlined">
-                              remove
-                            </span>
-                          </button>
-
-                          <span id="qty-val-1"> 1 </span>
-
-                          <button aria-label="Increase quantity">
-                            <span className="material-symbols-outlined">
-                              {" "}
-                              add{" "}
-                            </span>
-                          </button>
-                        </div>
-
-                        <div className="product-actions">
-                          <button>
-                            <span className="material-symbols-outlined">
-                              favorite
-                            </span>
-
-                            <span className="desktop-only">
-                              {" "}
-                              Save for Later{" "}
-                            </span>
-                          </button>
-
-                          <button className="remove-button">
-                            <span className="material-symbols-outlined">
-                              delete_outline
-                            </span>
-
-                            <span> Remove </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-
-                  <article
-                    className="cart-item"
-                    data-price="249"
-                    id="cart-item-2"
-                  >
-                    <div className="product-image">
-                      <img
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7ExjTL6G5AovRZ0KvWqlOKvcgDDBpaRYKEIZiISbATa4ZRZLgQQHX-IW4q8peIY67qo6kUOMsW0pOVSkJ2GvZDL9YlqCZryLpdw5kQ2YduktIYO73G3auXnw0jd6fcLeNOYaJNR_MIMMWdoMuSDNwvv81n2Oe0fP6288f83VXtU5dXz8Xuu8ZADpM7ZBGX8Ho7va2UDu7-RW-kwO2zx54Aa33pV86N17d6NQUFAR5MXcaxiuTPxM3nA"
-                        alt="Oversized Heavyweight Cotton Tee"
-                      />
-
-                      <span className="product-badge light"> ESSENTIALS </span>
-                    </div>
-
-                    <div className="product-info">
-                      <div>
-                        <div className="product-header">
-                          <div>
-                            <span className="product-category">
-                              LUXURY KNITWEAR • 280 GSM
-                            </span>
-
-                            <h2>Oversized Heavyweight Cotton Tee</h2>
-                          </div>
-
-                          <div className="product-price">
-                            <strong id="price-display-2"> 498 DH </strong>
-
-                            <span> 249 DH each </span>
-                          </div>
-                        </div>
-
-                        <div className="product-details">
-                          <div>
-                            <span>Size:</span>
-                            <strong>M</strong>
-                          </div>
-
-                          <div>
-                            <span>Color:</span>
-                            <i className="color-white"></i>
-                            <strong>Alabaster Off-White</strong>
-                          </div>
-
-                          <div>
-                            <span>SKU:</span>
-                            <strong>WK-TS-02</strong>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="product-controls">
-                        <div className="quantity">
-                          <button aria-label="Decrease quantity">
-                            <span className="material-symbols-outlined">
-                              remove
-                            </span>
-                          </button>
-
-                          <span id="qty-val-2"> 2 </span>
-
-                          <button aria-label="Increase quantity">
-                            <span className="material-symbols-outlined">
-                              {" "}
-                              add{" "}
-                            </span>
-                          </button>
-                        </div>
-
-                        <div className="product-actions">
-                          <button>
-                            <span className="material-symbols-outlined">
-                              favorite
-                            </span>
-
-                            <span className="desktop-only">
-                              {" "}
-                              Save for Later{" "}
-                            </span>
-                          </button>
-
-                          <button className="remove-button">
-                            <span className="material-symbols-outlined">
-                              delete_outline
-                            </span>
-
-                            <span> Remove </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div className="empty-cart hidden" id="cartEmptyState">
-                  <div className="empty-icon">
-                    <span className="material-symbols-outlined">
-                      {" "}
-                      shopping_bag{" "}
-                    </span>
-                  </div>
-
-                  <h3>YOUR BAG IS CURRENTLY EMPTY</h3>
-
-                  <p>
-                    Explore our tailored modern essentials crafted with
-                    heavyweight textiles for effortless everyday refinement.
-                  </p>
-
-                  <Link to="#"> EXPLORE COLLECTION </Link>
+                        </article>
+                      </>
+                    );
+                  })}
                 </div>
 
                 <div className="return-navigation">
@@ -315,7 +489,7 @@ export function CartPage() {
                 </div>
               </div>
 
-              <aside className="cart-right">
+              <aside className="cart-right" ref={cartRightRef}>
                 <div className="summary-card">
                   <div className="summary-heading">
                     <h2>ORDER SUMMARY</h2>
@@ -326,10 +500,12 @@ export function CartPage() {
                   <div className="summary-rows">
                     <div className="summary-row">
                       <span>
-                        Subtotal (<span id="summaryItemCount">3</span> items)
+                        Subtotal (
+                        <span id="summaryItemCount">{totalQuantity}</span>{" "}
+                        items)
                       </span>
 
-                      <strong id="subtotalDisplay"> 1,178 DH </strong>
+                      <strong id="subtotalDisplay"> {totalPrice}DH </strong>
                     </div>
 
                     <div className="summary-row">
@@ -400,18 +576,20 @@ export function CartPage() {
                       <small> PAYABLE AT RECEPTION </small>
                     </div>
 
-                    <strong id="totalDisplay"> 1,178 DH </strong>
+                    <strong id="totalDisplay"> {totalPrice} DH </strong>
 
                     <p>All prices in Moroccan Dirhams (MAD / DH)</p>
                   </div>
 
-                  <button className="checkout-button">
-                    <span> PROCEED TO CHECKOUT </span>
+                  <Link to={"/checkoutPage"}>
+                    <button className="checkout-button">
+                      <span> PROCEED TO CHECKOUT </span>
 
-                    <span className="material-symbols-outlined">
-                      arrow_right_alt
-                    </span>
-                  </button>
+                      <span className="material-symbols-outlined">
+                        arrow_right_alt
+                      </span>
+                    </button>
+                  </Link>
 
                   <div className="shipping-note">
                     <span className="material-symbols-outlined">
@@ -493,108 +671,6 @@ export function CartPage() {
             </div>
           </div>
         </section>
-
-        <section className="pairings-section">
-          <div className="container">
-            <div className="pairings-heading">
-              <div>
-                <span> COMPLETE THE SILHOUETTE </span>
-
-                <h2>FREQUENTLY PAIRED PIECES</h2>
-              </div>
-
-              <Link to="#"> VIEW FULL LOOKBOOK </Link>
-            </div>
-
-            <div className="pairings-grid">
-              <div className="pairing-card">
-                <div className="pairing-image">
-                  <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6C4X_Fr0kyoI9w7fYdz-TBwpwXhSvrXhzuR5H4OFpoD6VAYESmKiFjGDEAhLOA453PLrbkrLrIF2QS7brmHqPeTsT_IqbP9ZNVgKnWMwQid8qFcRWYzfluBxXRl_B7FbjacFBaZqXgDB7HAuMs0EeLq2A8OCyLyGIfQ1b8kqWpQKLnClzCx8-UF8mP9-TTmjyiWOwVdiydjCMreX_xlc__DNKQ4MZ0iiRZBaLNORd6WlsHCU4-pJudQ"
-                    alt="Pleated High-Rise Wool Trousers"
-                  />
-
-                  <span> PERFECT MATCH </span>
-                </div>
-
-                <div className="pairing-content">
-                  <div>
-                    <small> TROUSERS </small>
-
-                    <h3>Pleated High-Rise Wool Trousers</h3>
-
-                    <strong> 540 DH </strong>
-                  </div>
-
-                  <button>+ QUICK ADD (M)</button>
-                </div>
-              </div>
-
-              <div className="pairing-card">
-                <div className="pairing-image">
-                  <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4-MgXFiqxwSex0q5g0RoQiTUQkY4DUbTdSMyNFh-bInc6V_ZCy4QbUi-NNziiEKJZWB4NPvNSMwpCDFucYZJW6geVIInPyVYjIbMTMjxcFoSkypW5_YasvdELgCsxH12RczCZXw4mfEwJfzAAEmBxPN1oHwNaJflT-Fe4BnYV_mgvVVwdAd903IRtpOvUQYZYk-i_KeUe4Q2nY9SreeII1IzulK9xkYutzVGEFs93K7m-JeWUqNArnA"
-                    alt="Structured Leather Penny Loafers"
-                  />
-                </div>
-
-                <div className="pairing-content">
-                  <div>
-                    <small> FOOTWEAR </small>
-
-                    <h3>Structured Leather Penny Loafers</h3>
-
-                    <strong> 890 DH </strong>
-                  </div>
-
-                  <button>+ QUICK ADD (42)</button>
-                </div>
-              </div>
-
-              <div className="pairing-card">
-                <div className="pairing-image">
-                  <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8D7PWz377EeqKIWlVGDDnHhtjMHT_n1rmaFjTnK5QV1W_KEElfL3915eETThstdMHCWJcIuKYfYmVjlvl1Zazn9VTqzrzth6Wjj25PIJMP_XI0hILJnAgak92xfXkhZ0LLxM13lvg6_CIkG6QldMhBl5EXt0LqubKWKxUceU2oeHaScnJ_euwyjcBaOovlSLMc0lu7aHnjyGNQUdNH0RJiO6sIndhpJ8Ny7O_35J_u-80Ll0C92m5eA"
-                    alt="Refined Calfskin Dress Belt"
-                  />
-                </div>
-
-                <div className="pairing-content">
-                  <div>
-                    <small> LEATHER GOODS </small>
-
-                    <h3>Refined Calfskin Dress Belt</h3>
-
-                    <strong> 290 DH </strong>
-                  </div>
-
-                  <button>+ QUICK ADD (95)</button>
-                </div>
-              </div>
-
-              <div className="pairing-card">
-                <div className="pairing-image">
-                  <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxqGfGBvWM5sX4CoyNxyU5fSf3C_aJV_El3j91w1C_nP-F7e0kQbVobq5DSp-0yPXeJb1JaRLkVUSOcGHRkqKF3R-veZCDVD3bs7ULeGLK1czU9Uynm1dyFK_a2OQBUWF6WYxwpjLsOBSQEFXp3KgX5IMxJbSJYbk3VCePcyrhr5XKo5bkS0L6oipIUFgImds-Z2xJk3nMxLUkDoDbHjlKYHjQeQbaKca8b9Kjnoo3EAF7vL7lh8UY9g"
-                    alt="Architectural Leather Carry-All"
-                  />
-                </div>
-
-                <div className="pairing-content">
-                  <div>
-                    <small> BAGS </small>
-
-                    <h3>Architectural Leather Carry-All</h3>
-
-                    <strong> 780 DH </strong>
-                  </div>
-
-                  <button>+ QUICK ADD (ONE SIZE)</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
 
       <div className="checkout-notice" id="checkoutNotice">
@@ -608,6 +684,7 @@ export function CartPage() {
           </p>
         </div>
       </div>
+
       <Footer />
     </>
   );

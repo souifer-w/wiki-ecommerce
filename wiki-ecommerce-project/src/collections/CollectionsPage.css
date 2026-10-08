@@ -1,345 +1,243 @@
 /* =========================================================
    WIKI — COLLECTIONS PAGE
-   Premium Editorial Men's Fashion
+   Premium Editorial / Home Card System
    ========================================================= */
 
-:root {
-  --wiki-black: #090909;
-  --wiki-white: #ffffff;
-  --wiki-cream: #f5f4f0;
-  --wiki-soft: #eeece7;
-  --wiki-gray: #777;
-  --wiki-light-gray: #a2a19d;
-  --wiki-border: #deddd8;
+/* =========================================================
+   01. BASE
+   ========================================================= */
+
+main {
+  width: 100%;
+  background: #f7f6f2;
+  color: #111;
+}
+
+.collection-hero,
+.collection-toolbar,
+.collection-products,
+.collection-editorial {
+  width: 100%;
 }
 
 /* =========================================================
-   GLOBAL
-   ========================================================= */
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background: var(--wiki-white);
-  color: var(--wiki-black);
-  font-family: "Hanken Grotesk", sans-serif;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
-a {
-  color: inherit;
-}
-
-/* =========================================================
-   HERO
+   02. HERO
    ========================================================= */
 
 .collection-hero {
-  position: relative;
+  min-height: 72vh;
 
-  min-height: 570px;
-
-  padding: 100px 5vw 85px;
+  padding: 120px 5vw 70px;
 
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
 
-  overflow: hidden;
+  gap: 50px;
 
-  background: linear-gradient(135deg, #f8f7f3 0%, #f0efeb 55%, #e8e6e0 100%);
+  border-bottom: 1px solid #deddd8;
 }
-
-/* Huge background W */
-
-.collection-hero::before {
-  content: "W";
-
-  position: absolute;
-
-  right: -30px;
-  bottom: -160px;
-
-  font-family: "Bodoni Moda", serif;
-
-  font-size: 620px;
-  font-weight: 500;
-
-  line-height: 0.8;
-
-  color: rgba(0, 0, 0, 0.035);
-
-  pointer-events: none;
-}
-
-/* Decorative line */
-
-.collection-hero::after {
-  content: "";
-
-  position: absolute;
-
-  top: 90px;
-  right: 5vw;
-
-  width: 100px;
-  height: 1px;
-
-  background: rgba(0, 0, 0, 0.25);
-}
-
-/* Hero content */
 
 .collection-hero-content {
-  position: relative;
-  z-index: 2;
-
   max-width: 900px;
 }
 
-/* Small label */
-
 .eyebrow {
-  display: inline-block;
+  display: block;
 
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 
-  font-size: 10px;
+  color: #8c8982;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 8px;
   font-weight: 600;
 
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
 
   text-transform: uppercase;
 }
 
-/* Main title */
-
 .collection-hero h1 {
   margin: 0;
 
+  color: #111;
+
   font-family: "Bodoni Moda", serif;
 
-  font-size: clamp(65px, 9vw, 135px);
+  font-size: clamp(70px, 10vw, 145px);
 
-  font-weight: 500;
+  font-weight: 400;
 
-  line-height: 0.84;
+  line-height: 0.78;
 
   letter-spacing: -0.065em;
 }
 
 .collection-hero h1 em {
-  font-weight: 400;
+  font-style: italic;
 }
-
-/* Description */
 
 .collection-hero p {
-  max-width: 520px;
+  max-width: 420px;
 
-  margin: 35px 0 0;
+  margin: 40px 0 0;
 
-  color: #666560;
+  color: #77746e;
 
-  font-size: 14px;
+  font-family: "Hanken Grotesk", sans-serif;
 
-  line-height: 1.8;
+  font-size: 12px;
+
+  font-weight: 400;
+
+  line-height: 1.7;
 }
 
-/* Collection number */
-
 .collection-hero-number {
-  position: relative;
-  z-index: 2;
+  min-width: 110px;
+
+  padding-bottom: 5px;
 
   display: flex;
+
   flex-direction: column;
 
   align-items: flex-end;
 
-  gap: 3px;
+  gap: 7px;
 }
 
 .collection-hero-number span {
-  color: #777;
+  color: #999;
 
-  font-size: 8px;
-  font-weight: 600;
+  font-family: "Hanken Grotesk", sans-serif;
 
-  letter-spacing: 0.18em;
+  font-size: 7px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.15em;
 }
 
 .collection-hero-number strong {
+  color: #111;
+
   font-family: "Bodoni Moda", serif;
 
-  font-size: 42px;
-  font-weight: 500;
+  font-size: 24px;
 
-  line-height: 1;
+  font-weight: 400;
 }
 
 /* =========================================================
-   TOOLBAR
+   03. TOOLBAR
    ========================================================= */
 
 .collection-toolbar {
-  position: sticky;
+  padding: 22px 5vw;
 
-  top: 0;
-
-  z-index: 30;
-
-  min-height: 78px;
-
-  padding: 0 5vw;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  background: rgba(255, 255, 255, 0.94);
-
-  border-bottom: 1px solid var(--wiki-border);
-
-  backdrop-filter: blur(15px);
+  border-bottom: 1px solid #deddd8;
 }
-
-/* Left side */
 
 .collection-count {
   display: flex;
+
   align-items: center;
 
-  gap: 20px;
+  justify-content: space-between;
 }
 
 .collection-count span {
-  color: #888;
+  color: #8b8881;
 
-  font-size: 9px;
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 7px;
+
   font-weight: 500;
 
-  letter-spacing: 0.16em;
+  letter-spacing: 0.15em;
+
+  text-transform: uppercase;
 }
 
 .collection-count strong {
-  font-size: 9px;
+  color: #111;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 7px;
+
   font-weight: 600;
 
-  letter-spacing: 0.1em;
-}
-
-/* Right side */
-
-.collection-tools {
-  display: flex;
-  align-items: center;
-
-  gap: 28px;
-}
-
-.collection-tool {
-  display: inline-flex;
-  align-items: center;
-
-  gap: 7px;
-
-  padding: 10px 0;
-
-  border: 0;
-
-  background: transparent;
-
-  color: var(--wiki-black);
-
-  font-size: 9px;
-  font-weight: 600;
-
-  letter-spacing: 0.13em;
-
-  transition: opacity 0.25s ease;
-}
-
-.collection-tool:hover {
-  opacity: 0.5;
-}
-
-.collection-tool .material-symbols-outlined {
-  font-size: 17px;
+  letter-spacing: 0.12em;
 }
 
 /* =========================================================
-   PRODUCTS SECTION
+   04. PRODUCTS SECTION
    ========================================================= */
 
 .collection-products {
-  padding: 90px 5vw 130px;
-
-  background: var(--wiki-white);
+  padding: 0 5vw;
 }
 
 /* =========================================================
-   PRODUCT GRID
+   05. PRODUCT GRID
    ========================================================= */
 
 .collection-grid {
+  padding: 45px 0 110px;
+
   display: grid;
 
   grid-template-columns: repeat(4, minmax(0, 1fr));
 
-  gap: 90px;
+  gap: 32px 22px;
 }
 
 /* =========================================================
-   PRODUCT CARD
+   06. PRODUCT CARD
    ========================================================= */
 
 .collection-product {
   position: relative;
+
   min-width: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+
+  display: block;
+
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .collection-product:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
 }
 
 /* =========================================================
-   IMAGE CONTAINER
+   07. IMAGE
    ========================================================= */
 
 .collection-image-wrap {
   position: relative;
 
-  display: block;
-
   width: 100%;
 
-  aspect-ratio: 0.74;
+  aspect-ratio: 4 / 5;
 
   overflow: hidden;
 
-  background: #efeee9;
+  display: block;
+
+  border-radius: 18px;
+
+  background: #e8e6e0;
 
   text-decoration: none;
 
   cursor: pointer;
 }
-
-/* Product image */
 
 .collection-product-image {
   width: 100%;
@@ -350,7 +248,7 @@ a {
   object-fit: cover;
 
   transition:
-    transform 0.9s cubic-bezier(0.2, 0.65, 0.25, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.5s ease;
 }
 
@@ -361,129 +259,126 @@ a {
 }
 
 /* =========================================================
-   PRODUCT NUMBER
+   08. NUMBER
    ========================================================= */
 
 .product-index {
   position: absolute;
 
-  top: 17px;
-  left: 17px;
+  top: 16px;
+  left: 16px;
 
-  z-index: 3;
+  z-index: 5;
 
-  color: #fff;
+  width: 34px;
+  height: 34px;
 
-  font-size: 9px;
-  font-weight: 600;
+  display: flex;
 
-  letter-spacing: 0.15em;
+  align-items: center;
+  justify-content: center;
 
-  mix-blend-mode: difference;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  color: #111;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 8px;
+
+  font-weight: 500;
 
   pointer-events: none;
 }
 
 /* =========================================================
-   WISHLIST
+   09. NEW BADGE
    ========================================================= */
 
-.collection-wishlist {
+.collection-image-wrap::before {
+  content: "NEW";
+
   position: absolute;
 
-  top: 14px;
-  right: 14px;
+  top: 16px;
+  right: 16px;
 
   z-index: 5;
 
-  width: 42px;
-  height: 42px;
+  padding: 7px 10px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 30px;
 
-  border: 0;
-  border-radius: 50%;
+  background: #111;
 
-  background: rgba(255, 255, 255, 0.94);
+  color: #fff;
 
-  color: var(--wiki-black);
+  font-family: "Hanken Grotesk", sans-serif;
 
-  opacity: 0;
+  font-size: 7px;
 
-  transform: translateY(-8px);
+  font-weight: 600;
 
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    background 0.25s ease,
-    color 0.25s ease;
-}
+  letter-spacing: 0.12em;
 
-.collection-image-wrap:hover .collection-wishlist {
-  opacity: 1;
-
-  transform: translateY(0);
-}
-
-.collection-wishlist:hover {
-  background: var(--wiki-black);
-
-  color: var(--wiki-white);
-}
-
-.collection-wishlist .material-symbols-outlined {
-  font-size: 18px;
+  pointer-events: none;
 }
 
 /* =========================================================
-   VIEW PRODUCT
+   10. VIEW BUTTON
    ========================================================= */
 
 .collection-view {
   position: absolute;
 
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
+  left: 50%;
+  bottom: 20px;
 
-  z-index: 4;
+  z-index: 6;
 
-  min-height: 48px;
+  width: 105px;
+  height: 42px;
 
   display: flex;
+
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
-  padding: 0 18px;
+  gap: 8px;
 
-  background: var(--wiki-white);
+  border-radius: 30px;
 
-  color: var(--wiki-black);
+  background: #fff;
 
-  font-size: 9px;
+  color: #111;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 8px;
+
   font-weight: 600;
 
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
 
   opacity: 0;
 
-  transform: translateY(20px);
+  transform: translate(-50%, 15px);
 
   transition:
     opacity 0.35s ease,
-    transform 0.35s cubic-bezier(0.2, 0.65, 0.25, 1);
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .collection-image-wrap:hover .collection-view {
   opacity: 1;
 
-  transform: translateY(0);
+  transform: translate(-50%, 0);
 }
 
 .collection-view span {
-  font-size: 18px;
+  font-size: 14px;
 
   transition: transform 0.3s ease;
 }
@@ -493,92 +388,119 @@ a {
 }
 
 /* =========================================================
-   PRODUCT INFO
+   11. PRODUCT INFO
    ========================================================= */
 
 .collection-product-info {
-  padding-top: 19px;
+  padding: 17px 3px 0;
+
   display: flex;
-  flex-direction: column;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.collection-product-heading {
+  min-width: 0;
+
   flex: 1;
 }
 
-/* Product title row */
-
-.collection-product-heading {
-  min-height: 58px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-/* Category */
+/* =========================================================
+   12. CATEGORY
+   ========================================================= */
 
 .collection-category {
   display: block;
 
   margin-bottom: 7px;
 
-  color: var(--wiki-light-gray);
+  color: #999;
 
-  font-size: 8px;
-  font-weight: 600;
+  font-family: "Hanken Grotesk", sans-serif;
 
-  letter-spacing: 0.16em;
+  font-size: 7px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.13em;
 
   text-transform: uppercase;
 }
 
-/* Product name */
+/* =========================================================
+   13. PRODUCT NAME
+   ========================================================= */
 
 .collection-product-heading h2 {
-  max-width: 240px;
-  min-height: 48px;
+  max-width: 230px;
+
   margin: 0;
-  color: var(--wiki-black);
+
+  color: #111;
+
   font-family: "Bodoni Moda", serif;
+
   font-size: 20px;
-  font-weight: 500;
-  line-height: 1.2;
+
+  font-weight: 400;
+
+  line-height: 1;
+
   letter-spacing: -0.025em;
+
+  transition: color 0.3s ease;
 }
 
 .collection-product:hover .collection-product-heading h2 {
   color: #686762;
 }
 
-/* Price */
+/* =========================================================
+   14. PRICE
+   ========================================================= */
 
-.collection-product-heading strong {
+.collection-product-info strong {
   flex-shrink: 0;
 
-  padding-top: 16px;
+  padding-top: 1px;
 
-  color: var(--wiki-black);
+  color: #111;
 
-  font-size: 12px;
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 11px;
+
   font-weight: 600;
 
-  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 /* =========================================================
-   PRODUCT BOTTOM
+   15. PRODUCT META
    ========================================================= */
 
 .collection-product-bottom {
-  margin-top: auto;
-  min-height: 45px;
+  margin-top: 11px;
+
+  padding: 11px 3px 0;
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 15px;
-  padding-top: 13px;
-  border-top: 1px solid #e4e3de;
+
+  border-top: 1px solid #dddcd7;
 }
+
 /* =========================================================
-   COLOR DOTS
+   16. COLORS
    ========================================================= */
 
 .color-list {
@@ -586,18 +508,20 @@ a {
 
   align-items: center;
 
-  gap: 6px;
+  gap: 7px;
 }
 
 .color-dot {
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 10px;
 
   display: block;
 
+  flex-shrink: 0;
+
   border-radius: 50%;
 
-  border: 1px solid rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(0, 0, 0, 0.15);
 
   transition:
     transform 0.25s ease,
@@ -608,485 +532,615 @@ a {
   transform: scale(1.25);
 
   box-shadow:
-    0 0 0 2px #fff,
+    0 0 0 2px #f7f6f2,
     0 0 0 3px #111;
 }
 
 /* =========================================================
-   COLOR DOT COLORS
+   17. AVAILABLE
    ========================================================= */
 
-.color-dot:nth-child(1) {
-  background: #151515;
-}
+.collection-product-bottom::after {
+  content: "AVAILABLE";
 
-.color-dot:nth-child(2) {
-  background: #dedbd2;
-}
+  color: #8b8881;
 
-.color-dot:nth-child(3) {
-  background: #70756e;
-}
+  font-family: "Hanken Grotesk", sans-serif;
 
-.color-dot:nth-child(4) {
-  background: #273142;
-}
+  font-size: 7px;
 
-.color-dot:nth-child(5) {
-  background: #8a6d55;
-}
-
-.color-dot:nth-child(6) {
-  background: #b7a99a;
+  letter-spacing: 0.1em;
 }
 
 /* =========================================================
-   ADD TO CART
-   ========================================================= */
-.collection-cart {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  min-height: 38px;
-  padding: 0 16px;
-
-  border: 1px solid #090909;
-  background: #090909;
-  color: #ffffff;
-
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-
-  overflow: hidden;
-  transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    transform 0.25s ease;
-}
-
-/* Animated underline */
-
-.collection-cart::after {
-  content: "";
-
-  position: absolute;
-
-  left: 0;
-  bottom: -1px;
-
-  width: 0;
-  height: 1px;
-
-  background: #777;
-
-  transition: width 0.3s ease;
-}
-
-.collection-cart:hover {
-  opacity: 0.7;
-}
-
-.collection-cart:hover::after {
-  width: 100%;
-}
-
-.collection-cart .material-symbols-outlined {
-  font-size: 16px;
-  transition: transform 0.25s ease;
-}
-
-.collection-cart:hover .material-symbols-outlined {
-  transform: translateX(2px);
-}
-
-/* =========================================================
-   EDITORIAL SECTION
+   18. EDITORIAL SECTION
    ========================================================= */
 
 .collection-editorial {
-  position: relative;
-
   min-height: 620px;
 
-  padding: 110px 10vw;
+  padding: 90px 5vw;
 
   display: flex;
 
   align-items: center;
+
   justify-content: space-between;
 
-  overflow: hidden;
+  gap: 60px;
 
-  background: var(--wiki-black);
+  background: #111;
 
-  color: var(--wiki-white);
+  color: #fff;
 }
-
-/* Huge background W */
-
-.collection-editorial::after {
-  content: "W";
-
-  position: absolute;
-
-  right: -70px;
-  bottom: -190px;
-
-  font-family: "Bodoni Moda", serif;
-
-  font-size: 650px;
-
-  line-height: 0.8;
-
-  color: rgba(255, 255, 255, 0.025);
-
-  pointer-events: none;
-}
-
-/* Editorial content */
 
 .editorial-copy {
-  position: relative;
-
-  z-index: 2;
-
   max-width: 650px;
 }
 
 .editorial-copy .eyebrow {
-  color: #999;
+  color: #777;
+
+  margin-bottom: 25px;
 }
 
 .editorial-copy h2 {
   margin: 0;
 
+  color: #f7f6f2;
+
   font-family: "Bodoni Moda", serif;
 
-  font-size: clamp(55px, 7vw, 105px);
+  font-size: clamp(65px, 9vw, 125px);
 
   font-weight: 400;
 
-  line-height: 0.88;
+  line-height: 0.78;
 
-  letter-spacing: -0.055em;
+  letter-spacing: -0.06em;
 }
 
 .editorial-copy h2 em {
-  font-weight: 500;
+  font-style: italic;
 }
 
 .editorial-copy p {
-  max-width: 480px;
+  max-width: 430px;
 
-  margin: 35px 0;
+  margin: 40px 0 35px;
 
-  color: #a1a19e;
+  color: #999;
 
-  font-size: 14px;
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 12px;
 
   line-height: 1.8;
 }
 
-/* Editorial button */
-
 .editorial-button {
+  width: fit-content;
+
+  padding: 15px 20px;
+
   display: inline-flex;
 
   align-items: center;
 
-  gap: 25px;
+  gap: 18px;
 
-  padding-bottom: 10px;
-
-  border-bottom: 1px solid #fff;
+  border: 1px solid #444;
 
   color: #fff;
 
-  text-decoration: none;
+  font-family: "Hanken Grotesk", sans-serif;
 
-  font-size: 10px;
+  font-size: 7px;
+
   font-weight: 600;
 
   letter-spacing: 0.13em;
 
-  transition: gap 0.3s ease;
+  text-decoration: none;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 .editorial-button:hover {
-  gap: 32px;
+  background: #fff;
+
+  color: #111;
 }
 
 .editorial-button span {
-  font-size: 18px;
+  font-size: 14px;
 }
 
-/* Editorial W */
-
 .editorial-mark {
-  position: relative;
-
-  z-index: 2;
+  width: 320px;
+  height: 320px;
 
   display: flex;
 
   flex-direction: column;
 
   align-items: center;
+  justify-content: center;
 
-  gap: 15px;
+  border: 1px solid #333;
+
+  border-radius: 50%;
 }
 
 .editorial-mark span {
+  color: #f7f6f2;
+
   font-family: "Bodoni Moda", serif;
 
-  font-size: 190px;
+  font-size: 180px;
 
   font-weight: 400;
 
-  line-height: 0.8;
+  line-height: 0.7;
 }
 
 .editorial-mark small {
-  color: #777;
+  margin-top: 25px;
 
-  font-size: 8px;
+  color: #666;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 7px;
 
   letter-spacing: 0.2em;
 }
+/* COLLECTION SKELETON */
 
+.collection-skeleton-card {
+  pointer-events: none;
+}
+
+.skeleton-image {
+  position: relative;
+  overflow: hidden;
+  background: #e9e8e3;
+}
+
+.skeleton-shimmer {
+  position: absolute;
+  inset: 0;
+  width: 60%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transform: translateX(-180%);
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-index {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  color: rgba(0, 0, 0, 0.22);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.skeleton-line {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: #e6e5e0;
+}
+
+.skeleton-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 70%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.65),
+    transparent
+  );
+  transform: translateX(-150%);
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-category {
+  width: 70px;
+  height: 7px;
+  margin-bottom: 9px;
+}
+
+.skeleton-title {
+  width: 72%;
+  height: 14px;
+}
+
+.skeleton-price {
+  width: 55px;
+  height: 12px;
+  margin-top: 2px;
+}
+
+.skeleton-colors {
+  display: flex;
+  gap: 7px;
+}
+
+.skeleton-colors span {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #e1e0db;
+}
+
+.skeleton-colors span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 80%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  transform: translateX(-150%);
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.collection-skeleton-card:nth-child(2) .skeleton-shimmer,
+.collection-skeleton-card:nth-child(2) .skeleton-line::after,
+.collection-skeleton-card:nth-child(2) .skeleton-colors span::after {
+  animation-delay: 0.15s;
+}
+
+.collection-skeleton-card:nth-child(3) .skeleton-shimmer,
+.collection-skeleton-card:nth-child(3) .skeleton-line::after,
+.collection-skeleton-card:nth-child(3) .skeleton-colors span::after {
+  animation-delay: 0.3s;
+}
+
+.collection-skeleton-card:nth-child(4) .skeleton-shimmer,
+.collection-skeleton-card:nth-child(4) .skeleton-line::after,
+.collection-skeleton-card:nth-child(4) .skeleton-colors span::after {
+  animation-delay: 0.45s;
+}
+
+.collection-skeleton-card:nth-child(5) .skeleton-shimmer,
+.collection-skeleton-card:nth-child(5) .skeleton-line::after,
+.collection-skeleton-card:nth-child(5) .skeleton-colors span::after {
+  animation-delay: 0.6s;
+}
+
+.collection-skeleton-card:nth-child(6) .skeleton-shimmer,
+.collection-skeleton-card:nth-child(6) .skeleton-line::after,
+.collection-skeleton-card:nth-child(6) .skeleton-colors span::after {
+  animation-delay: 0.75s;
+}
+
+.collection-skeleton-card:nth-child(7) .skeleton-shimmer,
+.collection-skeleton-card:nth-child(7) .skeleton-line::after,
+.collection-skeleton-card:nth-child(7) .skeleton-colors span::after {
+  animation-delay: 0.9s;
+}
+
+.collection-skeleton-card:nth-child(8) .skeleton-shimmer,
+.collection-skeleton-card:nth-child(8) .skeleton-line::after,
+.collection-skeleton-card:nth-child(8) .skeleton-colors span::after {
+  animation-delay: 1.05s;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    transform: translateX(-180%);
+  }
+
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer,
+  .skeleton-line::after,
+  .skeleton-colors span::after {
+    animation: none;
+  }
+}
 /* =========================================================
-   TABLET
+   19. TABLET
    ========================================================= */
 
 @media (max-width: 1100px) {
+  .collection-hero {
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+
+  .collection-toolbar {
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+
+  .collection-products {
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+
   .collection-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 
-    gap: 55px 18px;
+    gap: 35px 18px;
   }
 
-  .collection-hero {
-    min-height: 500px;
-  }
-
-  .collection-hero h1 {
-    font-size: clamp(60px, 10vw, 100px);
-  }
-
-  .editorial-mark span {
-    font-size: 140px;
+  .collection-editorial {
+    padding-left: 4vw;
+    padding-right: 4vw;
   }
 }
 
 /* =========================================================
-   MOBILE
+   20. SMALL TABLET
    ========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .collection-hero {
-    min-height: 440px;
+    min-height: auto;
 
-    padding: 70px 20px 55px;
-  }
+    padding-top: 80px;
 
-  .collection-hero::before {
-    right: -30px;
-    bottom: -70px;
-
-    font-size: 300px;
-  }
-
-  .collection-hero::after {
-    display: none;
-  }
-
-  .collection-hero h1 {
-    font-size: 58px;
-  }
-
-  .collection-hero p {
-    max-width: 390px;
-
-    margin-top: 25px;
-
-    font-size: 13px;
+    display: block;
   }
 
   .collection-hero-number {
-    display: none;
-  }
+    margin-top: 45px;
 
-  /* Toolbar */
-
-  .collection-toolbar {
-    min-height: 65px;
-
-    padding: 0 20px;
-  }
-
-  .collection-count span {
-    display: none;
-  }
-
-  .collection-tools {
-    gap: 18px;
-  }
-
-  /* Products */
-
-  .collection-products {
-    padding: 55px 20px 90px;
+    align-items: flex-start;
   }
 
   .collection-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 45px 12px;
   }
+
+  .collection-editorial {
+    min-height: 550px;
+
+    display: block;
+  }
+
+  .editorial-mark {
+    width: 230px;
+    height: 230px;
+
+    margin-top: 70px;
+  }
+
+  .editorial-mark span {
+    font-size: 130px;
+  }
+}
+
+/* =========================================================
+   21. MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .collection-hero {
+    padding: 60px 18px 45px;
+  }
+
+  .collection-hero h1 {
+    font-size: 18vw;
+  }
+
+  .collection-hero p {
+    max-width: 300px;
+
+    margin-top: 28px;
+
+    font-size: 10px;
+  }
+
+  .collection-hero-number {
+    margin-top: 35px;
+  }
+
+  .collection-toolbar {
+    padding: 17px 18px;
+  }
+
+  .collection-products {
+    padding: 0 10px;
+  }
+
+  .collection-grid {
+    padding: 30px 0 75px;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 35px 10px;
+  }
+
+  /* Image */
 
   .collection-image-wrap {
-    aspect-ratio: 0.72;
+    aspect-ratio: 4 / 5;
+
+    border-radius: 13px;
   }
 
-  /* Product text */
+  /* Number */
+
+  .product-index {
+    top: 9px;
+    left: 9px;
+
+    width: 28px;
+    height: 28px;
+
+    font-size: 7px;
+  }
+
+  /* New */
+
+  .collection-image-wrap::before {
+    top: 9px;
+    right: 9px;
+
+    padding: 6px 7px;
+
+    font-size: 6px;
+  }
+
+  /* View */
+
+  .collection-view {
+    display: none;
+  }
+
+  /* Product */
+
+  .collection-product:hover {
+    transform: none;
+  }
 
   .collection-product-info {
-    padding-top: 13px;
+    display: block;
+
+    padding-top: 12px;
   }
 
-  .collection-product-heading {
-    display: block;
+  .collection-category {
+    margin-bottom: 6px;
+
+    font-size: 6px;
   }
 
   .collection-product-heading h2 {
     max-width: 100%;
 
     font-size: 16px;
+
+    line-height: 1.05;
   }
 
-  .collection-product-heading strong {
+  .collection-product-info strong {
     display: block;
 
-    padding-top: 8px;
+    margin-top: 8px;
 
-    font-size: 11px;
+    font-size: 10px;
   }
 
-  .collection-category {
-    font-size: 7px;
-  }
-
-  /* Mobile wishlist */
-
-  .collection-wishlist {
-    width: 36px;
-    height: 36px;
-
-    opacity: 1;
-
-    transform: none;
-  }
-
-  /* Hide desktop view button */
-
-  .collection-view {
-    display: none;
-  }
-
-  /* Mobile product hover */
-
-  .collection-product:hover {
-    transform: none;
-  }
-
-  /* Product bottom */
+  /* Meta */
 
   .collection-product-bottom {
-    margin-top: 12px;
+    margin-top: 9px;
+
+    padding-top: 9px;
   }
 
-  /* Cart becomes icon */
-
-  .collection-cart {
-    width: 35px;
-    height: 35px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-
-    border: 1px solid var(--wiki-black);
+  .color-list {
+    gap: 5px;
   }
 
-  .collection-cart::after {
-    display: none;
+  .color-dot {
+    width: 9px;
+    height: 9px;
   }
 
-  .collection-cart {
-    font-size: 0;
-  }
-
-  .collection-cart .material-symbols-outlined {
-    font-size: 17px;
+  .collection-product-bottom::after {
+    font-size: 5.5px;
   }
 
   /* Editorial */
 
   .collection-editorial {
-    min-height: 520px;
-
-    padding: 80px 25px;
+    padding: 75px 20px;
   }
 
   .editorial-copy h2 {
-    font-size: 60px;
+    font-size: 18vw;
   }
 
   .editorial-copy p {
-    max-width: 400px;
+    max-width: 300px;
 
-    font-size: 13px;
+    margin-top: 30px;
+
+    font-size: 10px;
   }
 
   .editorial-mark {
-    display: none;
+    width: 190px;
+    height: 190px;
+
+    margin-top: 60px;
+  }
+
+  .editorial-mark span {
+    font-size: 105px;
   }
 }
 
 /* =========================================================
-   SMALL MOBILE
+   22. VERY SMALL MOBILE
    ========================================================= */
 
 @media (max-width: 420px) {
-  .collection-hero h1 {
-    font-size: 49px;
-  }
-
-  .collection-products {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
   .collection-grid {
-    gap: 40px 10px;
+    gap: 30px 8px;
   }
 
   .collection-product-heading h2 {
     font-size: 14px;
   }
 
-  .collection-product-heading strong {
-    font-size: 10px;
+  .collection-product-info strong {
+    font-size: 9px;
   }
 
   .collection-category {
-    font-size: 6.5px;
+    font-size: 5.5px;
+  }
+
+  .collection-product-bottom::after {
+    font-size: 5px;
+  }
+}
+
+/* =========================================================
+   23. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .collection-product,
+  .collection-product-image,
+  .collection-view,
+  .collection-view span,
+  .collection-product-heading h2,
+  .color-dot {
+    transition: none;
+  }
+
+  .collection-product:hover {
+    transform: none;
+  }
+
+  .collection-image-wrap:hover .collection-product-image {
+    transform: none;
   }
 }

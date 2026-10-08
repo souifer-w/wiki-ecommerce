@@ -1,0 +1,90 @@
+.wiki-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f4f0;
+  color: #090909;
+  font-family: "Hanken Grotesk", sans-serif;
+}
+
+.wiki-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: wikiLoadingReveal 0.6s ease both;
+}
+
+.wiki-loading-logo {
+  position: relative;
+  margin-bottom: 30px;
+  font-family: "Bodoni Moda", serif;
+  font-size: 58px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 4px;
+}
+
+.wiki-loading-logo::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  top: 4px;
+  right: -12px;
+  border-radius: 50%;
+  background: #090909;
+  animation: wikiLoadingDot 1.5s ease-in-out infinite;
+}
+
+.wiki-loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #d6d5d0;
+  border-top-color: #090909;
+  border-radius: 50%;
+  animation: wikiLoadingSpin 0.8s linear infinite;
+}
+
+.wiki-loading-content p {
+  margin: 15px 0 0;
+  color: #77766f;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+@keyframes wikiLoadingSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wikiLoadingDot {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes wikiLoadingReveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

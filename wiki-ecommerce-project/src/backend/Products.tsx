@@ -1,8 +1,40 @@
+export type Product = (typeof products)[number];
+
+export type CartItem = Product & {
+  quantity: number;
+  selectColor: string;
+  selectSize: string;
+  selectImage: string;
+};
+
+export type OrderItem = {
+  id: string;
+
+  customer: {
+    name: string;
+    phone: string;
+    address: string;
+    city: string;
+    email: string;
+  };
+
+  items: CartItem[];
+
+  total: number;
+
+  createdAt: string;
+
+  status: "Pending" | "Processing" | "Shipped" | "Delivered" | "Cancelled";
+};
+
 export const products = [
   {
     id: 1,
     name: "Relaxed Baggy Trousers",
     price: 399,
+    category: "Trousers",
+    stock: 25,
+    sold: 18,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "A relaxed-fit baggy trouser designed for everyday comfort and a modern streetwear look. Its loose silhouette makes it easy to style with t-shirts, shirts, and sneakers.",
@@ -40,6 +72,9 @@ export const products = [
     id: 2,
     name: "Oversized Baggy Dress Shirt",
     price: 449,
+    category: "Shirts",
+    stock: 20,
+    sold: 12,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "An oversized dress shirt combining a relaxed silhouette with a clean and sophisticated style. Perfect for creating effortless casual and smart-casual outfits.",
@@ -78,6 +113,9 @@ export const products = [
     id: 3,
     name: "Baggy Fit Jeans",
     price: 499,
+    category: "Jeans",
+    stock: 18,
+    sold: 15,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "Relaxed baggy-fit jeans with a contemporary silhouette. A versatile everyday piece designed to bring a comfortable and modern feel to casual outfits.",
@@ -116,6 +154,9 @@ export const products = [
     id: 4,
     name: "Relaxed Baggy Shorts",
     price: 299,
+    category: "Shorts",
+    stock: 30,
+    sold: 21,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "Comfortable baggy shorts featuring a relaxed silhouette and casual design. An easy choice for warm-weather outfits and everyday streetwear styling.",
@@ -154,6 +195,9 @@ export const products = [
     id: 5,
     name: "Essential Casual Trousers",
     price: 379,
+    category: "Trousers",
+    stock: 24,
+    sold: 17,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "A clean and versatile pair of casual trousers designed for comfortable everyday wear. Easy to combine with shirts, polos, and casual footwear.",
@@ -192,6 +236,9 @@ export const products = [
     id: 6,
     name: "Relaxed Coofandy Shirt",
     price: 429,
+    category: "Shirts",
+    stock: 16,
+    sold: 14,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "A relaxed casual shirt with a clean contemporary appearance. Designed as a versatile wardrobe piece for effortless everyday styling.",
@@ -230,6 +277,9 @@ export const products = [
     id: 7,
     name: "Classic Dress Shirt",
     price: 399,
+    category: "Shirts",
+    stock: 22,
+    sold: 19,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "A timeless dress shirt with a refined and versatile design. Suitable for smart-casual outfits, formal occasions, and polished everyday looks.",
@@ -268,6 +318,9 @@ export const products = [
     id: 8,
     name: "Modern Golf Trousers",
     price: 449,
+    category: "Trousers",
+    stock: 14,
+    sold: 11,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "Modern trousers designed with a clean silhouette and versatile styling. A practical option for relaxed days, golf-inspired outfits, and smart-casual looks.",
@@ -306,6 +359,9 @@ export const products = [
     id: 9,
     name: "Essential Oversized Hoodie",
     price: 499,
+    category: "Hoodies",
+    stock: 19,
+    sold: 16,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "A relaxed oversized hoodie designed for everyday comfort and a modern streetwear aesthetic. Easy to layer and pair with casual trousers or jeans.",
@@ -344,6 +400,9 @@ export const products = [
     id: 10,
     name: "Overshirt Jacket",
     price: 599,
+    category: "Jackets",
+    stock: 12,
+    sold: 9,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "A versatile shirt-jacket combining the relaxed look of an overshirt with the structure of a lightweight jacket. Ideal for layering throughout the day.",
@@ -382,6 +441,9 @@ export const products = [
     id: 11,
     name: "Beach Casual Shorts",
     price: 299,
+    category: "Shorts",
+    stock: 27,
+    sold: 20,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "Light and relaxed shorts designed for warm-weather days. A simple and versatile piece for beach trips, holidays, and casual summer outfits.",
@@ -420,6 +482,9 @@ export const products = [
     id: 12,
     name: "Urban Streetwear Set",
     price: 549,
+    category: "Sets",
+    stock: 15,
+    sold: 13,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "A contemporary streetwear piece designed around a relaxed silhouette and effortless urban style. Easy to combine with sneakers and everyday essentials.",
@@ -458,6 +523,9 @@ export const products = [
     id: 13,
     name: "Classic Polo T-Shirt",
     price: 349,
+    category: "T-Shirts",
+    stock: 28,
+    sold: 23,
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "A clean polo-inspired t-shirt that combines a classic collar with a relaxed everyday style. A versatile essential for casual and smart-casual outfits.",

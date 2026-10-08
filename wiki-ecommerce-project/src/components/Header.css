@@ -2,185 +2,826 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: 0 !important;
+
   width: 100%;
 
-  color: #f3efef;
-  border-radius: 5px;
+  background: #070707;
+  color: #fff;
 }
+
+/* =========================
+   ANNOUNCEMENT
+========================= */
 
 .announcement {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 9px;
 
-  padding: 7px 15px;
+  min-height: 30px;
+  padding: 14px 15px;
 
   background: #000;
   color: #fff;
 
+  font-family: "Hanken Grotesk", sans-serif;
   font-size: 9px;
   font-weight: 600;
-
   letter-spacing: 0.16em;
+  line-height: 1.4;
   text-align: center;
+
+  box-sizing: border-box;
 }
+
+.announcement span {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* =========================
+   NAV CONTAINER
+========================= */
+
 .nav-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: 90px;
-  gap: 30px;
-  background: rgb(8, 8, 8);
+
+  width: 100%;
+  height: 72px;
+
+  padding: 0 32px;
+
+  background: #070707;
+
+  box-sizing: border-box;
 }
+
+/* =========================
+   LOGO
+========================= */
 
 .logo {
   display: flex;
   align-items: center;
 
-  color: #fffcfc;
-  font-size: medium !important;
-  font-weight: 700;
+  color: #fff !important;
 
-  letter-spacing: 0.16em;
-
-  text-decoration: none;
-}
-
-.main-nav {
-  margin-left: auto;
-
-  display: flex;
-  align-items: center;
-
-  gap: 28px;
-}
-
-.main-nav a {
-  position: relative;
-  color: #f7f2f2 !important;
-  font-size: 10px;
+  font-family: "Bodoni Moda", serif;
+  font-size: 22px;
   font-weight: 600;
   letter-spacing: 0.12em;
+
+  line-height: 1;
   text-decoration: none;
-  transition: color 0.25s ease;
+
+  transition: opacity 0.3s ease;
 }
 
-.main-nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -7px;
-  width: 0;
-  height: 1px;
-  background: #fff;
-  transition: width 0.3s ease;
+.logo:hover {
+  opacity: 0.65;
 }
 
-.main-nav a:hover {
-  color: #fff !important;
+.logo:focus,
+.logo:focus-visible {
+  outline: none;
 }
 
-.main-nav a:hover::after {
-  width: 100%;
+/* =========================
+   NAV
+========================= */
+
+.main-nav {
+  flex: 1;
 }
+
+/* =========================
+   ACTIONS
+========================= */
 
 .nav-actions {
   display: flex;
   align-items: center;
 
-  gap: 8px;
-}
-.icon-btn,
-.currency-btn,
-.bag-btn {
-  min-width: 34px;
-  height: 36px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
-  color: #faf7f7;
-  border: none;
-  cursor: pointer;
-  transition:
-    color 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s ease;
+  gap: 7px;
+
+  margin-left: auto;
 }
 
-.icon-btn:hover,
-.currency-btn:hover,
-.bag-btn:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-}
+/* =========================
+   SEARCH BOX
+========================= */
 
-.icon-btn:hover {
-  transform: translateY(-1px);
-}
-
-.material-symbols-outlined {
-  color: #f8f4f4;
-  transition:
-    color 0.25s ease,
-    transform 0.25s ease;
-}
-
-.icon-btn:hover .material-symbols-outlined,
-.bag-btn:hover .material-symbols-outlined {
-  color: #fff;
-  transform: scale(1.08);
-}
 .search-box {
+  position: relative;
+
   display: flex;
   align-items: center;
-  gap: 10px;
 
-  border-bottom: 1px solid transparent;
+  width: 38px;
+  height: 38px;
 
-  transition:
-    width 0.3s ease,
-    border-color 0.3s ease;
+  border: none !important;
+  background: transparent !important;
+
+  overflow: visible;
 }
 
-.search-box.active {
-  border-bottom-color: #fff;
-}
+/* =========================
+   SEARCH INPUT
+========================= */
 
 .search-box input {
   width: 0;
+
   padding: 0;
 
   border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
+
   outline: none;
 
   background: transparent;
-  color: #fff;
 
-  font-family: inherit;
+  color: #fff !important;
+
+  font-family: "Hanken Grotesk", sans-serif;
   font-size: 10px;
-  letter-spacing: 0.12em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
 
   opacity: 0;
 
+  box-sizing: border-box;
+
   transition:
     width 0.3s ease,
-    opacity 0.2s ease,
+    opacity 0.3s ease,
     padding 0.3s ease;
 }
 
+.search-box input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Search open */
+
 .search-box.active input {
   width: 180px;
-  padding: 8px 0;
+
+  padding: 8px 42px 8px 0;
 
   opacity: 1;
+
+  border-top: none !important;
+  border-right: none !important;
+  border-left: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
 
-.search-box input::placeholder {
-  color: rgba(255, 255, 255, 0.55);
+/* Input focus */
+
+.search-box input:focus {
+  outline: none;
+
+  border-top: none !important;
+  border-right: none !important;
+  border-left: none !important;
+
+  border-bottom: 1px solid #fff !important;
+
+  box-shadow: none !important;
 }
 
-.search-box .icon-btn {
+/* =========================
+   BUTTONS
+========================= */
+
+.icon-btn,
+.currency-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 48px;
+
+  padding: 0 10px;
+
+  background: transparent !important;
+
+  color: #fff !important;
+
+  border: none !important;
+  outline: none !important;
+
+  cursor: pointer;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+/* =========================
+   SEARCH BUTTON
+========================= */
+
+.icon-btn {
+  position: absolute;
+
+  right: 0;
+  top: 0;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  z-index: 20;
+}
+
+.icon-btn:hover {
+  color: #aaa !important;
+
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.icon-btn:focus,
+.icon-btn:focus-visible,
+.icon-btn:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================
+   MATERIAL SYMBOLS
+========================= */
+
+.site-header .material-symbols-outlined {
+  color: #fff !important;
+
+  font-family: "Material Symbols Outlined" !important;
+
+  font-style: normal;
+  font-weight: normal;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  direction: ltr;
+
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+.icon-btn .material-symbols-outlined {
+  font-size: 30px !important;
+
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 350,
+    "GRAD" 0,
+    "opsz" 24;
+
+  transition:
+    color 0.25s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.icon-btn:hover .material-symbols-outlined {
+  color: #aaa !important;
+
+  transform: scale(1.08);
+}
+
+/* =========================
+   CURRENCY
+========================= */
+
+.currency-btn {
+  min-width: 82px;
+
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+
+  white-space: nowrap;
+}
+
+.currency-btn:hover {
+  color: #aaa !important;
+
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.currency-btn:focus,
+.currency-btn:focus-visible,
+.currency-btn:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================
+   ACCOUNT
+========================= */
+
+.account-wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+/* Not logged in */
+
+.account-btn {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #fff !important;
+
+  text-decoration: none;
+
+  background: transparent !important;
+
+  border: none !important;
+
+  padding: 0;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  transition: opacity 0.25s ease;
+}
+
+.account-btn:hover {
+  color: #aaa !important;
+
+  opacity: 0.7;
+}
+
+.account-btn .material-symbols-outlined {
+  color: #fff !important;
+
+  font-size: 20px;
+
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 300,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+.account-text {
+  color: #fff !important;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+}
+
+/* Logged-in account button */
+
+.account-user-btn {
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-user-btn:focus,
+.account-user-btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================
+   GOOGLE PROFILE IMAGE
+========================= */
+
+.account-avatar {
+  width: 34px;
+  height: 34px;
+
+  display: block;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  background: #222;
+}
+
+/* Fallback if Google has no photo */
+
+.account-avatar-fallback {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  color: #090909 !important;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* =========================
+   ACCOUNT DROPDOWN
+========================= */
+
+.account-dropdown {
+  position: absolute;
+
+  top: calc(100% + 14px);
+  right: 0;
+
+  width: 280px;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+
+  border-radius: 5px;
+
+  background: #eeeaea;
+
+  border: 1px solid rgba(9, 9, 9, 0.12);
+
+  z-index: 9999;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+  animation: accountDropdownIn 0.3s ease forwards;
+}
+
+/* =========================
+   ACCOUNT INFO
+========================= */
+
+.account-info {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.account-dropdown-avatar {
+  width: 42px;
+  height: 42px;
+
+  min-width: 42px;
+
+  display: block;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
   flex-shrink: 0;
+}
+
+.account-info > div {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.account-info strong {
+  display: block;
+
+  color: #000 !important;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.account-info span {
+  display: block;
+
+  color: rgba(0, 0, 0, 0.55) !important;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 10px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+/* =========================
+   ACCOUNT DIVIDER
+========================= */
+
+.account-dropdown-line {
+  width: 100%;
+
+  height: 1px;
+
+  margin: 18px 0 10px;
+
+  background: rgba(9, 9, 9, 0.1);
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+.account-logout {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 10px 0;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  cursor: pointer;
+
+  color: #090909 !important;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+
+  text-align: left;
+
+  transition: opacity 0.2s ease;
+}
+
+.account-logout:hover {
+  opacity: 0.5;
+}
+
+.account-logout .material-symbols-outlined {
+  color: #000 !important;
+
+  font-size: 18px;
+
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 300,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+/* =========================
+   BAG
+========================= */
+
+.bag-btn {
+  min-width: 58px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 0 10px;
+
+  background: transparent !important;
+
+  color: #fff !important;
+
+  border: none !important;
+  outline: none !important;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.bag-btn:hover {
+  color: #aaa !important;
+
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.bag-btn:focus,
+.bag-btn:focus-visible,
+.bag-btn:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.bag-btn .material-symbols-outlined {
+  color: #fff !important;
+
+  font-size: 30px;
+}
+
+.bag-btn:hover .material-symbols-outlined {
+  color: #aaa !important;
+
+  transform: scale(1.06);
+}
+
+.quantity-total {
+  min-width: 12px;
+
+  color: #fff !important;
+
+  font-size: 14px !important;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+.bag-btn > span:last-child {
+  min-width: 12px;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+/* =========================
+   DROPDOWN ANIMATION
+========================= */
+
+@keyframes accountDropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+  .announcement {
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    font-size: 7px;
+
+    letter-spacing: 0.1em;
+  }
+
+  .nav-container {
+    height: 64px;
+
+    padding: 0 15px;
+  }
+
+  .logo {
+    font-size: 19px;
+  }
+
+  .nav-actions {
+    gap: 3px;
+  }
+
+  .search-box {
+    height: 36px;
+  }
+
+  .search-box.active input {
+    width: 120px;
+  }
+
+  .icon-btn,
+  .currency-btn,
+  .bag-btn {
+    height: 36px;
+  }
+
+  .currency-btn {
+    min-width: auto;
+
+    padding: 0 7px;
+
+    font-size: 8px;
+  }
+
+  .bag-btn {
+    min-width: 45px;
+
+    padding: 0 6px;
+  }
+
+  .account-dropdown {
+    width: 250px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 430px) {
+  .announcement {
+    font-size: 6.5px;
+  }
+
+  .nav-container {
+    padding: 0 10px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .search-box.active input {
+    width: 90px;
+  }
+
+  .currency-btn {
+    display: none;
+  }
+
+  .nav-actions {
+    gap: 2px;
+  }
+
+  .account-dropdown {
+    width: 230px;
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

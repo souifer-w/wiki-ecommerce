@@ -46,6 +46,7 @@ ul {
 .material-symbols-outlined {
   font-size: 20px;
   line-height: 1;
+  color: #000 !important;
 }
 
 /* ========================================
@@ -267,6 +268,7 @@ ul {
 
 .user-icon .material-symbols-outlined {
   font-size: 18px;
+  color: #000 !important;
 }
 
 /* ========================================
@@ -412,7 +414,7 @@ ul {
 }
 
 .inspection-note .material-symbols-outlined {
-  color: #000;
+  color: #000 !important;
   font-size: 18px;
 }
 
@@ -691,11 +693,15 @@ ul {
   justify-content: center;
 
   background: transparent;
-  color: #000;
+  color: #121111 !important;
 
   transition: 0.2s ease;
 }
-
+.quantity .material-symbols-outlined,
+.cod-features .material-symbols-outlined,
+.concierge-card .material-symbols-outlined {
+  color: #000 !important;
+}
 .quantity button:hover {
   background: var(--surface-high);
 }
@@ -771,7 +777,7 @@ ul {
 
   border-radius: 50%;
 
-  background: var(--surface-container);
+  background: black;
 
   color: var(--secondary);
 }
@@ -944,7 +950,7 @@ ul {
 
 .delivery-label .material-symbols-outlined {
   font-size: 16px;
-  color: var(--secondary);
+  color: var(--secondary) !important;
 }
 
 /* ========================================
@@ -1193,6 +1199,7 @@ ul {
 
 .cod-icon .material-symbols-outlined {
   font-size: 18px;
+  color: black !important;
 }
 
 .cod-heading h3 {
@@ -1267,6 +1274,7 @@ ul {
 
 .concierge-info > .material-symbols-outlined {
   font-size: 24px;
+  color: black !important;
 }
 
 .concierge-info div {
@@ -1513,7 +1521,7 @@ ul {
 }
 
 .checkout-notice > .material-symbols-outlined {
-  color: #faf9f7;
+  color: #070707 !important;
   font-size: 22px;
 }
 
@@ -1661,7 +1669,13 @@ footer {
   font-size: 12px;
   line-height: 20px;
 }
-
+.color-selected {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid #ccc;
+}
 .express {
   margin-top: 12px;
 
