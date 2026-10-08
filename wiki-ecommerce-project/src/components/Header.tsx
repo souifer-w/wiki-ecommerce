@@ -79,7 +79,7 @@ export function Header({ cart }: CartPageProps) {
           "-=0.2",
         )
         .from(
-          ".nav-actions > *",
+          ".currency-btn, .account-wrapper, .bag-btn",
           {
             opacity: 0,
             y: 10,
@@ -178,7 +178,10 @@ export function Header({ cart }: CartPageProps) {
         href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap"
         rel="stylesheet"
       />
-
+      <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+        rel="stylesheet"
+      />{" "}
       <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
         rel="stylesheet"
